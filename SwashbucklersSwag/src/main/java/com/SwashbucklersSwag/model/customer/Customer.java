@@ -1,6 +1,8 @@
 package com.SwashbucklersSwag.model.customer;
 
 import com.SwashbucklersSwag.model.location.Location;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import javax.persistence.Column;
@@ -83,10 +85,14 @@ public class Customer {
         this.email = email;
     }
 
+    //Jackson annotations to disallow the getting of password through JSON
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    //Jackson annotations to allow the setting of password through JSON
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

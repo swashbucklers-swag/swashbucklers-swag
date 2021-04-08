@@ -11,11 +11,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "inventory")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 public class Inventory {
 
     @Id

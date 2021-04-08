@@ -13,11 +13,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "timesheets")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @AllArgsConstructor
 public class Timesheet {
 

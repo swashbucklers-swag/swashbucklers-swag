@@ -13,11 +13,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "locations")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 public class Location {
 
     @Id

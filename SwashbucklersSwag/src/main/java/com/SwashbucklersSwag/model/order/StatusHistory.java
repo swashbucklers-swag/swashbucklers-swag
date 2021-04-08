@@ -12,11 +12,8 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "status_history")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @AllArgsConstructor
 public class StatusHistory {
     @Id

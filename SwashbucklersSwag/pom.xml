@@ -61,6 +61,14 @@
             <artifactId>h2</artifactId>
             <version>1.4.195</version>
         </dependency>
+
+        <!-- https://projectlombok.org/setup/maven -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

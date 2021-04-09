@@ -44,7 +44,6 @@ public class Employee {
     @Column(name = "phone", nullable = false)
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(nullable = false)
     private Location location;
     @Column(nullable = false)
     private Rank rank;

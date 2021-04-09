@@ -20,8 +20,7 @@ public class Inventory {
     @GeneratedValue
     @Column(name = "inventory_id")
     private int inventoryId;
-    @OneToOne(mappedBy = "itemId")
-    @Column(name = "item_id", nullable = false)
+    @OneToOne(mappedBy = "inventory")
     private Item item;
     @PositiveOrZero
     @Column(nullable = false)

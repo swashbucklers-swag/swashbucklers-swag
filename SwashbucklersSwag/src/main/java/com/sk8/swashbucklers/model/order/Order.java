@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,17 +33,15 @@ public class Order {
     @Column(name = "order_id")
     private int orderId;
     @ManyToOne
-    @Column(name = "customer_id", nullable = false)
     private Customer customer;
     @ManyToOne
-    @Column(name = "location_id", nullable = false)
     private Location location;
     @CreationTimestamp
     @Column(name = "date_of_order", nullable = false)
     private Timestamp dateOfOrder;
     @OneToMany(mappedBy = "historyId")
     @Column(name = "history_id", nullable = false)
-    private StatusHistory statusHistory;
+    private List<StatusHistory> statusHistory;
     @OneToMany(mappedBy = "order")
     private Set<OrderDetails> orderDetails;
 }

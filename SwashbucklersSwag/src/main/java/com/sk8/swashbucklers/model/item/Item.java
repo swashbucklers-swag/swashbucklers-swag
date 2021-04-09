@@ -29,6 +29,9 @@ public class Item {
     @DecimalMax(value = "100", inclusive = false)
     @Column
     private int discount;
+    @OneToOne
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
 
     public Item(int itemId, @Size(min = 1) String description, @Size(min = 1, max = 255) String name, @Positive @Digits(integer = 10, fraction = 2) double price, @PositiveOrZero @DecimalMax(value = "100", inclusive = false) int discount) {
         this.itemId = itemId;

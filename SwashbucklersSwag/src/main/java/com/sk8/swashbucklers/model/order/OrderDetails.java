@@ -25,7 +25,6 @@ public class OrderDetails {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
     @ManyToOne
-    @Column(name = "item_id", nullable = false)
     private Item item;
     @Positive
     @Column(nullable = false)

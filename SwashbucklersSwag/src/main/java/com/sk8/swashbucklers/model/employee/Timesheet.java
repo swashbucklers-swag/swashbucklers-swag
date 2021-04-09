@@ -30,6 +30,5 @@ public class Timesheet {
     @Column(name = "clock_out")
     private Timestamp clockOut;
     @ManyToOne
-    @Column(name = "employee_id", nullable = false)
     private Employee employee;
 }

@@ -1,4 +1,4 @@
-package com.SwashbucklersSwag.model.location;
+package com.sk8.swashbucklers.model.location;
 
 /**
  * Enumeration representing US states as their two character abbreviations

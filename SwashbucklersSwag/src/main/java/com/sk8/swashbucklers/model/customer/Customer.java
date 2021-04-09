@@ -1,28 +1,31 @@
-package com.SwashbucklersSwag.model.employee;
+package com.sk8.swashbucklers.model.customer;
 
-import com.SwashbucklersSwag.model.location.Location;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import com.sk8.swashbucklers.model.location.Location;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 /**
- * Represents an Employee
+ * Represents a customer
  *
  * @author Daniel Bernier
  */
 @Entity
-@Table(name = "employees")
+@Table(name = "customers")
 @Data
 @NoArgsConstructor
-public class Employee {
+public class Customer {
 
     @Id
     @GeneratedValue
-    @Column(name = "employee_id")
-    private int employeeId;
+    @Column(name = "customer_id")
+    private int customerId;
     @Size(min = 1)
     @Column(name = "firstname", nullable = false)
     private String firstName;
@@ -37,23 +40,20 @@ public class Employee {
     @Setter(AccessLevel.NONE)
     private String password;
     @Size(min = 10, max = 10)
-    @Column(name = "phone", nullable = false)
+    @Column(nullable = false)
     private String phoneNumber;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @Column(nullable = false)
     private Location location;
-    @Column(nullable = false)
-    private Rank rank;
 
-    public Employee(int employeeId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, @Email String email, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location, Rank rank) {
-        this.employeeId = employeeId;
+    public Customer(int customerId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, @Email String email, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.location = location;
-        this.rank = rank;
     }
 
     //Jackson annotations to disallow the getting of password through JSON

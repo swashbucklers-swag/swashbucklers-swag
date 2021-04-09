@@ -1,4 +1,4 @@
-package com.SwashbucklersSwag.model.order;
+package com.sk8.swashbucklers.model.order;
 
 /**
  * Enumeration representing the state of an order

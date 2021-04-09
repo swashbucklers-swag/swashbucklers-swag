@@ -1,8 +1,9 @@
-package com.SwashbucklersSwag.model.item;
+package com.sk8.swashbucklers.model.item;
 
-import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "items")
@@ -14,12 +15,12 @@ public class Item {
     @GeneratedValue
     @Column(name = "item_id")
     private int itemId;
-    @Size(min = 1)
-    @Column(nullable = false)
-    private String description;
     @Size(min = 1, max = 255)
     @Column(nullable = false)
     private String name;
+    @Size(min = 1)
+    @Column(nullable = false)
+    private String description;
     @Positive
     @Digits(integer = 10, fraction = 2)
     @Column(nullable = false)

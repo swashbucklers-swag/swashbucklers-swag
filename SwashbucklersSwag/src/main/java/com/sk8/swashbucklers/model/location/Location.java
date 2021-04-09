@@ -1,8 +1,9 @@
-package com.SwashbucklersSwag.model.location;
+package com.sk8.swashbucklers.model.location;
 
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Represents a location with necessary information for the delivery of a package

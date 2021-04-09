@@ -1,8 +1,9 @@
-package com.SwashbucklersSwag.model.item;
+package com.sk8.swashbucklers.model.item;
 
-import jakarta.validation.constraints.PositiveOrZero;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 
 /**
  * Represents an inventory entry, tracking quantity

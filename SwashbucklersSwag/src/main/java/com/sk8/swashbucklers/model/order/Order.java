@@ -1,8 +1,10 @@
-package com.SwashbucklersSwag.model.order;
+package com.sk8.swashbucklers.model.order;
 
-import com.SwashbucklersSwag.model.customer.Customer;
-import com.SwashbucklersSwag.model.location.Location;
-import lombok.*;
+import com.sk8.swashbucklers.model.customer.Customer;
+import com.sk8.swashbucklers.model.location.Location;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -43,5 +45,4 @@ public class Order {
     private StatusHistory statusHistory;
     @OneToMany(mappedBy = "order")
     private Set<OrderDetails> orderDetails;
-
 }

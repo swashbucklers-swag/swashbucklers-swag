@@ -1,6 +1,8 @@
-package com.SwashbucklersSwag.model.order;
+package com.sk8.swashbucklers.model.order;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;

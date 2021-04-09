@@ -1,9 +1,10 @@
-package com.SwashbucklersSwag.model.order;
+package com.sk8.swashbucklers.model.order;
 
-import com.SwashbucklersSwag.model.item.Item;
-import jakarta.validation.constraints.Positive;
-import lombok.*;
+import com.sk8.swashbucklers.model.item.Item;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 
 /**
  * Represents the details of an order

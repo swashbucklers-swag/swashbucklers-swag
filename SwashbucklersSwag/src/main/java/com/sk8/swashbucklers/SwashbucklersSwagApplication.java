@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SwashbucklersswagApplication {
+public class SwashbucklersSwagApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SwashbucklersswagApplication.class, args);
+		SpringApplication.run(SwashbucklersSwagApplication.class, args);
 	}
-
 }

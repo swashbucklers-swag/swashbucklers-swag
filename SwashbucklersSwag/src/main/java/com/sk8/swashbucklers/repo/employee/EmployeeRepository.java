@@ -4,7 +4,15 @@ import com.sk8.swashbucklers.model.employee.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Represents the Repository for Employee Model
+ *
+ * @author Nick Zimmerman
+ * */
+
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
+    Employee findByEmail(String employeeEmail);
 
 }

@@ -13,6 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TimesheetRepository extends JpaRepository<Timesheet, Integer> {
 
+    /**
+     *
+     * @param employeeEmail
+     * @return Timesheet requested from employee email
+     */
     Timesheet findByEmail(String employeeEmail);
 
 }

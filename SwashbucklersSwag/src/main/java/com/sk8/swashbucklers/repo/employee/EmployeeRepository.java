@@ -13,6 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
+    /**
+     *
+     * @param employeeEmail
+     * @return {@link Employee#getEmail() get email}
+     */
     Employee findByEmail(String employeeEmail);
 
 }

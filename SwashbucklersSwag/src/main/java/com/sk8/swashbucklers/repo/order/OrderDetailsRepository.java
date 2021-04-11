@@ -13,6 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Integer> {
 
+    /**
+     *
+     * @param orderId
+     * @return Order Details determined by order Id
+     */
     OrderDetails findByOrder(Integer orderId);
 
 }

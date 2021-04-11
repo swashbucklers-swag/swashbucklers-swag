@@ -2,7 +2,7 @@ package com.sk8.swashbucklers.controller;
 
 import com.sk8.swashbucklers.model.authentication.AuthenticationRequest;
 import com.sk8.swashbucklers.model.authentication.AuthenticationResponse;
-import com.sk8.swashbucklers.services.MyUserDetailsService;
+import com.sk8.swashbucklers.services.SwagUserDetailsService;
 import com.sk8.swashbucklers.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for handling logins and requests for a sample page
+ */
+
 @RestController
 public class LoginController {
 
@@ -25,7 +29,7 @@ public class LoginController {
     private JwtUtil jwtTokenUtil;
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private SwagUserDetailsService userDetailsService;
 
     @RequestMapping({"/hello"})
     public String firstPage() {

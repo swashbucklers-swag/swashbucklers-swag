@@ -1,6 +1,6 @@
 package com.sk8.swashbucklers.util;
 
-import com.sk8.swashbucklers.services.MyUserDetailsService;
+import com.sk8.swashbucklers.services.SwagUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,11 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Jason Web Token request filter
+ */
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private SwagUserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;

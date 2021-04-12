@@ -21,13 +21,13 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
      * @param customerId
      * @return A list of 0 or more Orders determined by customer id
      */
-    List<Order> getByCustomer(Integer customerId);
+    List<Order> getByCustomer_CustomerId(Integer customerId);
 
     /**
      *
      * @param dateOfOrder
      * @return A list of 0 or more Orders determined by the date of Order
      */
-    List<Order> getByDate(Timestamp dateOfOrder);
+    List<Order> getByDateOfOrder(Timestamp dateOfOrder);
 
 }

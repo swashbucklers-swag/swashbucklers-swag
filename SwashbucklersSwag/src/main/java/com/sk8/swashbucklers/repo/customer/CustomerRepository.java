@@ -15,10 +15,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     /**
      *
-     * @param customerEmail
+     * @param email
      * @return Customer
      */
-    Customer findByEmail(String customerEmail);
+    Customer findByEmail(String email);
 
 
 }

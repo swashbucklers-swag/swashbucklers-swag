@@ -15,9 +15,8 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Integer> {
 
     /**
      *
-     * @param employeeEmail
+     * @param email
      * @return Timesheet requested from employee email
      */
-    Timesheet findByEmail(String employeeEmail);
-
+    Timesheet findByEmployee_Email(String email);
 }

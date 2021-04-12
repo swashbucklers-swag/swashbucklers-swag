@@ -15,9 +15,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     /**
      *
-     * @param employeeEmail
+     * @param email
      * @return {@link Employee#getEmail() get email}
      */
-    Employee findByEmail(String employeeEmail);
+    Employee findByEmail(String email);
 
 }

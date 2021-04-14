@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * This InventoryService allows for communication with {@link InventoryRepository} and enforces data constraints on requests to repository
+ *
  * @author Daniel Bernier
  */
 @Service

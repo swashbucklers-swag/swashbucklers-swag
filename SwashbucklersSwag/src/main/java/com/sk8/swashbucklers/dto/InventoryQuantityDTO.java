@@ -8,6 +8,7 @@ import javax.validation.constraints.PositiveOrZero;
 
 /**
  * Data transfer object for inventory quantity information
+ *
  * @author Daniel Bernier
  */
 @Data

@@ -9,6 +9,7 @@ import javax.validation.constraints.PositiveOrZero;
 
 /**
  * Data transfer object for item discount information
+ *
  * @author Daniel Bernier
  */
 @Data

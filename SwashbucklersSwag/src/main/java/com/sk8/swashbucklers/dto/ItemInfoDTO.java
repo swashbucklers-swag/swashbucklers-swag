@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 
 /**
  * Data transfer object for item information
+ *
  * @author Daniel Bernier
  */
 @Data

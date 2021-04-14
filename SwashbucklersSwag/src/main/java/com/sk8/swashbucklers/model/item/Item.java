@@ -5,10 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ * Represents an item entry, holding various properties about an item
+ *
+ * @author Daniel Bernier
+ */
 @Entity
 @Table(name = "items")
 @Data

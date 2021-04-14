@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * tests for {@link LocationService}
+ *
+ * @author Daniel Bernier
+ */
 @SpringBootTest
 public class LocationServiceTest {
 

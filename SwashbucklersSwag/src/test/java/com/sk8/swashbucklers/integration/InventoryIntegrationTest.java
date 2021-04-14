@@ -19,11 +19,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import javax.transaction.Transactional;
 
+/**
+ * tests for integration of {@link InventoryController}
+ *
+ * @author Daniel Bernier
+ */
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:test-application.properties")
-public class InventoryIntegrationTest {
+class InventoryIntegrationTest {
 
     private MockMvc mockMvc;
 

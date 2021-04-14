@@ -51,13 +51,12 @@ public class LocationDTO {
      */
     public static Function<LocationDTO, Location> DTOToLocation(){
         return (locationDTO) -> {
-            Location location = new Location(locationDTO.getLocationId(),
+            Assert.notNull(locationDTO);
+            return new Location(locationDTO.getLocationId(),
                     locationDTO.getAddress(),
                     locationDTO.getCity(),
                     State.valueOf(locationDTO.getState()),
                     locationDTO.getZip());
-            location.setLocationId(0);
-            return location;
         };
     }
 }

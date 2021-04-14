@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * Service for getting locations with various constraints
+ *
  * @author Daniel Bernier
  */
 @Service

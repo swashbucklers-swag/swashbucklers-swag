@@ -1,4 +1,4 @@
-package com.sk8.swashbucklers;
+package com.sk8.swashbucklers.integration;
 
 import com.sk8.swashbucklers.controller.CustomerController;
 import com.sk8.swashbucklers.model.customer.Customer;
@@ -17,6 +17,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+/**
+ * Integration tests for customers module
+ */
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest

@@ -1,5 +1,6 @@
-package com.sk8.swashbucklers.model.customer;
+package com.sk8.swashbucklers.dto;
 
+import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.model.location.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,12 +32,12 @@ public class CustomerDTO {
     @NotNull
     @Size(min = 1)
     private String lastName;
-    @NotNull
-    @Size(min = 1)
-    private String password;
     @NotNull @UniqueElements
     @Email
     private String email;
+    @NotNull
+    @Size(min = 1)
+    private String password;
     @NotNull
     @Size(min = 10, max = 10)
     private String phoneNumber;
@@ -49,8 +50,8 @@ public class CustomerDTO {
             return new CustomerDTO(customer.getCustomerId(),
                     customer.getFirstName(),
                     customer.getLastName(),
-                    "",
                     customer.getEmail(),
+                    "",
                     customer.getPhoneNumber(),
                     customer.getLocation());};
     }
@@ -59,8 +60,8 @@ public class CustomerDTO {
             Customer customer = new Customer(customerDTO.getCustomerId(),
                     customerDTO.getFirstName(),
                     customerDTO.getLastName(),
-                    customerDTO.getPassword(),
                     customerDTO.getEmail(),
+                    customerDTO.getPassword(),
                     customerDTO.getPhoneNumber(),
                     customerDTO.getLocation());
             return customer;

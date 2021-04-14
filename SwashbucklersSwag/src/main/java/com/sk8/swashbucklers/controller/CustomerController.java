@@ -1,5 +1,8 @@
-package com.sk8.swashbucklers.model.customer;
+package com.sk8.swashbucklers.controller;
 
+import com.sk8.swashbucklers.model.customer.Customer;
+import com.sk8.swashbucklers.dto.CustomerDTO;
+import com.sk8.swashbucklers.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +37,6 @@ public class CustomerController {
                 "  <li>/email :: GET</li>\n" +
                 "  <li>/location :: GET</li>\n" +
                 "  <li>/phonenumber :: GET</li>\n" +
-                "  <li>/login :: POST</li>\n" +
                 "  <li>/create :: POST</li>\n" +
                 "  <li>/update :: PUT</li>\n" +
                 "</ul>";
@@ -51,7 +53,7 @@ public class CustomerController {
     public Page<CustomerDTO> getAllCustomers(
             @RequestParam(value="page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "offset", required = false, defaultValue = "25") int offset,
-            @RequestParam(value = "sortby", required = false, defaultValue = "itemId") String sortBy,
+            @RequestParam(value = "sortby", required = false, defaultValue = "customerId") String sortBy,
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order){
 
         return CUSTOMER_SERVICE.getAllCustomers(page, offset, sortBy, order);
@@ -61,7 +63,7 @@ public class CustomerController {
      * @param id The id of the customer
      * @return The data transfer representation of the requested Customer
      */
-    @GetMapping("/customer-id/{id}")
+    @GetMapping("/id/{id}")
     public CustomerDTO getCustomerById(@PathVariable(name = "id") int id){
         return CUSTOMER_SERVICE.getCustomerById(id);
     }
@@ -70,8 +72,8 @@ public class CustomerController {
      * @param email The id of the customer
      * @return The data transfer representation of the requested Customer
      */
-    @GetMapping("/customer-email/{email}")
-    public CustomerDTO getCustomerByEmail(@PathVariable(name = "email") String email){
+    @GetMapping("/email")
+    public CustomerDTO getCustomerByEmail(@RequestParam(name = "email") String email){
         return CUSTOMER_SERVICE.getCustomerByEmail(email);
     }
     /**
@@ -79,8 +81,8 @@ public class CustomerController {
      * @param phone The id of the customer
      * @return The data transfer representation of the requested Customer
      */
-    @GetMapping("/customer-phone/{phone}")
-    public CustomerDTO getCustomerByPhone(@PathVariable(name = "phone") String phone){
+    @GetMapping("/phone")
+    public CustomerDTO getCustomerByPhone(@RequestParam(name = "phone") String phone){
         return CUSTOMER_SERVICE.getCustomerByPhoneNumber(phone);
     }
     /**
@@ -119,7 +121,7 @@ public class CustomerController {
      * @return The data transfer representation of the newly updated customer
      */
     @PutMapping("/update")
-    public CustomerDTO updateInventoryInfo(@RequestBody CustomerDTO customerinfoDTO){
+    public CustomerDTO updateCustomerInfo(@RequestBody CustomerDTO customerinfoDTO){
         return CUSTOMER_SERVICE.updateCustomerInfo(customerinfoDTO);
     }
 }

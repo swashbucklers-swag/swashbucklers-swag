@@ -1,5 +1,7 @@
-package com.sk8.swashbucklers.model.customer;
+package com.sk8.swashbucklers.services;
 
+import com.sk8.swashbucklers.dto.CustomerDTO;
+import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.repo.customer.CustomerRepository;
 import com.sk8.swashbucklers.util.hashing.PasswordHashingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,6 +139,7 @@ public class CustomerService {
         } catch (NoSuchAlgorithmException ignored) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setLocation(customerDTO.getLocation());
 
         return CustomerDTO.customerToDTO().apply(CUSTOMER_REPO.save(customer));
@@ -165,17 +168,17 @@ public class CustomerService {
     private String validateSortBy(String sortBy){
         switch (sortBy.toLowerCase(Locale.ROOT)){
             case "firstname":
-                return "firstname";
+                return "firstName";
             case "lastname":
-                return "lastname";
+                return "lastName";
             case "email":
                 return "email";
             case "location":
                 return "location";
             case "phonenumber":
-                return "phonenumber";
+                return "phoneNumber";
             default:
-                return "customer_id";
+                return "customerId";
         }
     }
 }

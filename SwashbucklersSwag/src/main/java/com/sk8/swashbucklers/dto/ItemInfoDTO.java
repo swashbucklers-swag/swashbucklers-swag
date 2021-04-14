@@ -7,6 +7,10 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+/**
+ * Data transfer object for item information
+ * @author Daniel Bernier
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

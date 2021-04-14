@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for inventory resource utilizing {@link InventoryService}
+ * @author Daniel Bernier
+ */
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {

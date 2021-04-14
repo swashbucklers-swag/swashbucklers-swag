@@ -1,5 +1,6 @@
-package com.sk8.swashbucklers.util;
+package com.sk8.swashbucklers.util.hashing;
 
+import org.springframework.stereotype.Component;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,7 +9,8 @@ import java.security.NoSuchAlgorithmException;
  * Hashing utility for hashing passwords
  * @author Daniel Bernier
  */
-public class PasswordHashingUtil implements Hashable{
+@Component
+public class PasswordHashingUtil implements Hashable {
 
     /**
      * Takes the users email and password and returns a hash

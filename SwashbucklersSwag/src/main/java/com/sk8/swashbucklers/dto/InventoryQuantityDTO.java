@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+/**
+ * Data transfer object for inventory quantity information
+ * @author Daniel Bernier
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

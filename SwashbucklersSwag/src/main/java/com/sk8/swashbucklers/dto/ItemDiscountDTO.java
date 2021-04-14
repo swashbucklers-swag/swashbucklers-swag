@@ -7,6 +7,10 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+/**
+ * Data transfer object for item discount information
+ * @author Daniel Bernier
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

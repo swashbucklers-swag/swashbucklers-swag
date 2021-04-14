@@ -42,7 +42,7 @@ public class Customer {
     @Size(min = 10, max = 10)
     @Column(nullable = false)
     private String phoneNumber;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Location location;
 
     public Customer(int customerId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, @Email String email, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location) {

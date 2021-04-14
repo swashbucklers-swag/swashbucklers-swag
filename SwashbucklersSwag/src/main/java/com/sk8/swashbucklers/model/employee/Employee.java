@@ -41,7 +41,7 @@ public class Employee {
     @Setter(AccessLevel.NONE)
     private String password;
     @Size(min = 10, max = 10)
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = false, unique = true)
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
     private Location location;

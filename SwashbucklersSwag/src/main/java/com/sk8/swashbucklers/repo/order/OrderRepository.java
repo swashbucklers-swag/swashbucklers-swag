@@ -15,19 +15,19 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-
-    /**
-     *
-     * @param customerId
-     * @return A list of 0 or more Orders determined by customer id
-     */
-    List<Order> getByCustomer(Integer customerId);
-
-    /**
-     *
-     * @param dateOfOrder
-     * @return A list of 0 or more Orders determined by the date of Order
-     */
-    List<Order> getByDate(Timestamp dateOfOrder);
+//
+//    /**
+//     *
+//     * @param customerId
+//     * @return A list of 0 or more Orders determined by customer id
+//     */
+//    List<Order> getByCustomer(Integer customerId);
+//
+//    /**
+//     *
+//     * @param dateOfOrder
+//     * @return A list of 0 or more Orders determined by the date of Order
+//     */
+//    List<Order> getByDate(Timestamp dateOfOrder);
 
 }

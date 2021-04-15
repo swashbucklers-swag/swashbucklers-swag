@@ -43,7 +43,7 @@ public class Employee {
     @Size(min = 10, max = 10)
     @Column(name = "phone", nullable = false, unique = true)
     private String phoneNumber;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade=CascadeType.ALL)
     private Location location;
     @Column(nullable = false)
     private Rank rank;

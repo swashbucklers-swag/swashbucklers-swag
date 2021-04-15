@@ -9,4 +9,5 @@ public class SwashbucklersSwagApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SwashbucklersSwagApplication.class, args);
 	}
+
 }

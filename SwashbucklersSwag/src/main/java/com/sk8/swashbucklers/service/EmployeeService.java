@@ -85,13 +85,14 @@ public class EmployeeService {
 
 
     public EmployeeDTO createEmployee(Employee employee){
-        try {
-            employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employee.getEmail(), employee.getPassword()));
-        } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        Employee saved = EMPLOYEE_REPO.save(employee);
-        return EmployeeDTO.employeeToDTO().apply(saved);
+//        try {
+//            employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employee.getEmail(), employee.getPassword()));
+//        } catch (NoSuchAlgorithmException ignored) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//        Employee saved = EMPLOYEE_REPO.save(employee);
+//        return EmployeeDTO.employeeToDTO().apply(saved);
+        return null;
     }
 
 
@@ -101,25 +102,26 @@ public class EmployeeService {
 
 
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO){
-        Optional<Employee> employeeOptional = EMPLOYEE_REPO.findById(employeeDTO.getEmployeeId());
-
-        if(!employeeOptional.isPresent())
-            return null;
-
-        //updating fields
-        Employee employee = employeeOptional.get();
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setLastName(employeeDTO.getLastName());
-        employee.setEmail(employeeDTO.getEmail());
-        try {
-            employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employeeDTO.getEmail(),employeeDTO.getPassword()));
-        } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        employee.setPhoneNumber(employeeDTO.getPhoneNumber());
-        employee.setLocation(employeeDTO.getLocation());
-
-        return EmployeeDTO.employeeToDTO().apply(EMPLOYEE_REPO.save(employee));
+//        Optional<Employee> employeeOptional = EMPLOYEE_REPO.findById(employeeDTO.getEmployeeId());
+//
+//        if(!employeeOptional.isPresent())
+//            return null;
+//
+//        //updating fields
+//        Employee employee = employeeOptional.get();
+//        employee.setFirstName(employeeDTO.getFirstName());
+//        employee.setLastName(employeeDTO.getLastName());
+//        employee.setEmail(employeeDTO.getEmail());
+//        try {
+//            employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employeeDTO.getEmail(),employeeDTO.getPassword()));
+//        } catch (NoSuchAlgorithmException ignored) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//        employee.setPhoneNumber(employeeDTO.getPhoneNumber());
+//        employee.setLocation(employeeDTO.getLocation());
+//
+//        return EmployeeDTO.employeeToDTO().apply(EMPLOYEE_REPO.save(employee));
+        return null;
     }
 
     /**

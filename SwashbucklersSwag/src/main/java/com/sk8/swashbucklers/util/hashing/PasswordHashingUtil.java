@@ -1,13 +1,17 @@
 package com.sk8.swashbucklers.util.hashing;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 
 /**
  * Hashing utility for hashing passwords
  * @author Daniel Bernier
  */
+@Component
 public class PasswordHashingUtil implements Hashable {
 
     /**

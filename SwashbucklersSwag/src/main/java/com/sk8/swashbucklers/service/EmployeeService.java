@@ -11,9 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Email;
@@ -104,13 +101,13 @@ public class EmployeeService {
 
 
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO){
-        Optional<Employee> customerOptional = EMPLOYEE_REPO.findById(employeeDTO.getEmployeeId());
+        Optional<Employee> employeeOptional = EMPLOYEE_REPO.findById(employeeDTO.getEmployeeId());
 
-        if(!customerOptional.isPresent())
+        if(!employeeOptional.isPresent())
             return null;
 
         //updating fields
-        Employee employee = customerOptional.get();
+        Employee employee = employeeOptional.get();
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setEmail(employeeDTO.getEmail());

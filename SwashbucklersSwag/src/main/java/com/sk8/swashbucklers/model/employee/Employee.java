@@ -45,9 +45,19 @@ public class Employee {
     private String phoneNumber;
     @ManyToOne(cascade=CascadeType.ALL)
     private Location location;
-    @Column(nullable = false)
+    @Column(name = "rank", nullable = false)
     private Rank rank;
 
+    /**
+     * @param employeeId
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param phoneNumber
+     * @param location
+     * @param rank
+     */
     public Employee(int employeeId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, @Email String email, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location, Rank rank) {
         this.employeeId = employeeId;
         this.firstName = firstName;

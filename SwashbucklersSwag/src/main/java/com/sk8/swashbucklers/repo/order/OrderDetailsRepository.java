@@ -18,6 +18,6 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Inte
      * @param orderId
      * @return Order Details determined by order Id
      */
-    OrderDetails findByOrder(Integer orderId);
+    OrderDetails findByOrder_OrderId(Integer orderId);
 
 }

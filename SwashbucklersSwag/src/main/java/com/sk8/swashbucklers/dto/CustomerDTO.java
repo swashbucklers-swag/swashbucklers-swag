@@ -2,19 +2,18 @@ package com.sk8.swashbucklers.dto;
 
 import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.model.location.Location;
+import io.jsonwebtoken.lang.Assert;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.function.Function;
 
 /**
- * Inventory data transfer object for {@link com.sk8.swashbucklers.model.customer}
+ * Customer data transfer object for {@link com.sk8.swashbucklers.model.customer}
  *
  * @author John Stone
  */
@@ -24,28 +23,22 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class CustomerDTO {
 
-    @NotNull
     private int customerId;
-    @NotNull
     @Size(min = 1)
     private String firstName;
-    @NotNull
     @Size(min = 1)
     private String lastName;
-    @NotNull @UniqueElements
+    @UniqueElements
     @Email
     private String email;
-    @NotNull
     @Size(min = 1)
     private String password;
-    @NotNull
     @Size(min = 10, max = 10)
     private String phoneNumber;
-    @NotNull
     private Location location;
 
     public static Function<Customer, CustomerDTO> customerToDTO(){
-        return (customer) -> {
+        return customer -> {
             Assert.notNull(customer);
             return new CustomerDTO(customer.getCustomerId(),
                     customer.getFirstName(),
@@ -56,15 +49,15 @@ public class CustomerDTO {
                     customer.getLocation());};
     }
     public static Function<CustomerDTO, Customer> DTOToCustomer(){
-        return (customerDTO) -> {
-            Customer customer = new Customer(customerDTO.getCustomerId(),
+        return customerDTO -> {
+            Assert.notNull(customerDTO);
+            return new Customer(customerDTO.getCustomerId(),
                     customerDTO.getFirstName(),
                     customerDTO.getLastName(),
                     customerDTO.getEmail(),
                     customerDTO.getPassword(),
                     customerDTO.getPhoneNumber(),
                     customerDTO.getLocation());
-            return customer;
         };
     }
 }

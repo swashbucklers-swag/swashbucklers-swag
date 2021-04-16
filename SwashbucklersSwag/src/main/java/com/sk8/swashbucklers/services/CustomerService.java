@@ -37,7 +37,7 @@ public class CustomerService {
      * Gets all customers, applying pagination and sorting
      * @param page The page to be selected defaults to 0 if page could not be understood
      * @param offset The number of elements per page [5|10|25|50|100] defaults to 25 if offset could not be understood
-     * @param sortBy The property/field to sort by ["quantity"|"name"|"description"|"price"|"discount"|"itemId"] defaults to itemId if sortby could not be understood
+     * @param sortBy The property/field to sort by ["firstname"|"lastname"|"email"|"phonenumber"] defaults to custiomerId if sortby could not be understood
      * @param order The order in which the list is displayed ["ASC"|"DESC"]
      * @return The page of data transfer representations of all customer objects with pagination and sorting applied
      */
@@ -87,9 +87,9 @@ public class CustomerService {
      * @param id The location being searched from
      * @param page The page to be selected defaults to 0 if page could not be understood
      * @param offset The number of elements per page [5|10|25|50|100] defaults to 25 if offset could not be understood
-     * @param sortBy The property/field to sort by ["quantity"|"name"|"description"|"price"|"discount"|"itemId"] defaults to itemId if sortby could not be understood
+     * @param sortBy The property/field to sort by ["firstname"|"lastname"|"email"|"phonenumber"] defaults to custiomerId if sortby could not be understood
      * @param order The order in which the list is displayed ["ASC"|"DESC"]
-     * @return The page of data transfer representations of all inventory objects who's names contain the given text with pagination and sorting applied
+     * @return The page of data transfer representations of all customer objects who's location matches the given location Id with pagination and sorting applied
      */
     public Page<CustomerDTO> getAllCustomersByLocation(int id, int page, int offset, String sortBy, String order){
         page = validatePage(page);
@@ -120,7 +120,7 @@ public class CustomerService {
     }
     /**
      * Updates a customer's info
-     * @param customerDTO Item info to be updated
+     * @param customerDTO Customer info to be updated
      * @return Data transfer representation of updated object
      */
     public CustomerDTO updateCustomerInfo(CustomerDTO customerDTO){
@@ -129,7 +129,6 @@ public class CustomerService {
         if(!customerOptional.isPresent())
             return null;
 
-        //updating fields
         Customer customer = customerOptional.get();
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
@@ -155,6 +154,11 @@ public class CustomerService {
         return page;
     }
 
+    /**
+     *  Ensures a permitted offset valye
+     * @param offset The offset number being validated
+     * @return A valid offset value
+     */
     private int validateOffset(int offset){
         if(offset != 5 && offset != 10 && offset != 25 && offset != 50 && offset != 100)
             offset = 25;
@@ -174,7 +178,7 @@ public class CustomerService {
             case "email":
                 return "email";
             case "location":
-                return "location";
+                return "location.locationId";
             case "phonenumber":
                 return "phoneNumber";
             default:

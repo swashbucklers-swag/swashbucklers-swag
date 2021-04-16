@@ -22,6 +22,7 @@ import java.util.Optional;
 
 /**
  * Tests for {@link CustomerService}
+ * @author John Stone
  */
 
 @SpringBootTest

@@ -18,7 +18,7 @@ public class CustomerController {
     }
 
     /**
-     * Default landing page for /inventory giving more information about requests and HTTP verbs
+     * Default landing page for /customer giving more information about requests and HTTP verbs
      * @return String with information supported endpoints
      */
     @GetMapping
@@ -68,7 +68,7 @@ public class CustomerController {
         return CUSTOMER_SERVICE.getCustomerById(id);
     }
     /**
-     * Gets customer who's email matches providede email
+     * Gets customer who's email matches provided email
      * @param email The id of the customer
      * @return The data transfer representation of the requested Customer
      */
@@ -86,17 +86,17 @@ public class CustomerController {
         return CUSTOMER_SERVICE.getCustomerByPhoneNumber(phone);
     }
     /**
-     * Gets customers with locations matching the given integer, applies pagination and sorting
+     * Gets customers with locations matching the given location id, applies pagination and sorting
      * @param id the location to return customers from
      * @param page The page to be selected
      * @param offset The number of elements per page
      * @param sortBy The property/field to sort by
      * @param order The order in which the list is displayed ["ASC"|"DESC"]
-     * @return The page of data transfer representations of all inventory objects who's names contain the given text with pagination and sorting applied
+     * @return The page of data transfer representations of all customers withe the given location Id with pagination and sorting applied
      */
-    @GetMapping("/location")
+    @GetMapping("/location/{id}")
     public Page<CustomerDTO> getAllCustomersFromLocation(
-            @RequestParam(value = "id") int id,
+            @PathVariable(name = "id") int id,
             @RequestParam(value="page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "offset", required = false, defaultValue = "25") int offset,
             @RequestParam(value = "sortby", required = false, defaultValue = "itemId") String sortBy,
@@ -110,7 +110,7 @@ public class CustomerController {
      * @return The data transfer representation of the newly added inventory object
      */
     @PostMapping("/create")
-    public CustomerDTO addNewInventory(@RequestBody CustomerDTO customerDTO){
+    public CustomerDTO addCustomer(@RequestBody CustomerDTO customerDTO){
         customerDTO.setCustomerId(0);
         Customer c = customerDTO.DTOToCustomer().apply(customerDTO);
         return CUSTOMER_SERVICE.createNewCustomer(c);

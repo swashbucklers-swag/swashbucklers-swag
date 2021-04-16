@@ -13,11 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.constraints.Email;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * Represents the methods that can be executed for Employee's
+ * @author Nick Zimmerman
+ */
 @Service
 public class EmployeeService {
 
@@ -31,7 +34,14 @@ public class EmployeeService {
         this.passwordHashingUtil = passwordHashingUtil;
     }
 
-
+    /**
+     * Returns list of all employee's
+     * @param page which page to display
+     * @param offset how many entries per page
+     * @param sortBy attribute to sort by
+     * @param order asc or desc
+     * @return page to be displayed
+     */
     public Page<EmployeeDTO> getAllEmployee(int page, int offset, String sortBy, String order){
         page = validatePage(page);
         offset = validateOffset(offset);
@@ -48,9 +58,10 @@ public class EmployeeService {
 
 
     /**
-     *
+     * Locates single employee by their Id
      * @param employeeId the employee's id
      * @return Employee or null
+     *
      */
     public EmployeeDTO getEmployeeById(int employeeId){
         Optional<Employee> requested = EMPLOYEE_REPO.findById(employeeId);
@@ -59,31 +70,52 @@ public class EmployeeService {
 
 
     /**
-     *
+     * Locates single employee by their email
      * @param email the employee's email
      * @return Employee or null
      */
-    public EmployeeDTO getEmployeeByEmail(@Email String email){
+    public EmployeeDTO getEmployeeByEmail(String email){
         Optional<Employee> requested = EMPLOYEE_REPO.findByEmail(email);
         return requested.map(employee -> EmployeeDTO.employeeToDTO().apply(employee)).orElse(null);
     }
 
-
-    public Page<EmployeeDTO> getEmployeeByRank(Rank rank, int page, int offset, String sortBy, String order){
+    /**
+     * Returns list of employee's of specified rank
+     * @param rank Employee level (i.e. Manager / Janitor)
+     * @param page which page to display
+     * @param offset how many entries per page
+     * @param sortBy attribute to sort by
+     * @param order asc or desc
+     * @return page to be displayed
+     */
+    public Page<EmployeeDTO> getEmployeeByRank(String rank, int page, int offset, String sortBy, String order){
         page = validatePage(page);
         offset = validateOffset(offset);
         sortBy = validateSortBy(sortBy);
+        //Rank r;
 
-        Page<Employee> employees;
-        if(order.equalsIgnoreCase("DESC"))
-            employees = EMPLOYEE_REPO.findAll(PageRequest.of(page, offset, Sort.by(sortBy).descending()));
-        else
-            employees = EMPLOYEE_REPO.findAll(PageRequest.of(page, offset, Sort.by(sortBy).ascending()));
+        try{
+            Rank r = Rank.valueOf(rank.toUpperCase());
 
-        return employees.map(EmployeeDTO.employeeToDTO());
+            Page<Employee> employees;
+            if(order.equalsIgnoreCase("DESC"))
+                employees = EMPLOYEE_REPO.findByRankEquals(r,PageRequest.of(page,offset,Sort.by(sortBy).descending()));
+            else
+                employees = EMPLOYEE_REPO.findByRankEquals(r,PageRequest.of(page,offset,Sort.by(sortBy).ascending()));
+
+            return employees.map(EmployeeDTO.employeeToDTO());
+        } catch (Exception ignored){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not understand Rank (CAPTAIN,CREW,LANDLUBBER)");
+        }
+
+
     }
 
-
+    /**
+     * Create Employee
+     * @param employee new employee to be persisted
+     * @return EmployeeDTO upon successful persistence
+     */
     public EmployeeDTO createEmployee(Employee employee){
         try {
             employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employee.getEmail(), employee.getPassword()));
@@ -95,11 +127,11 @@ public class EmployeeService {
     }
 
 
-    public EmployeeDTO loginEmployee(EmployeeDTO employeeDTO){
-        return null;
-    }
-
-
+    /**
+     * Updates given Employee's information
+     * @param employeeDTO data transfer object for employee
+     * @return mutated employee
+     */
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO){
         Optional<Employee> employeeOptional = EMPLOYEE_REPO.findById(employeeDTO.getEmployeeId());
 
@@ -111,6 +143,7 @@ public class EmployeeService {
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setEmail(employeeDTO.getEmail());
+        employee.setRank(employeeDTO.getRank());
         try {
             employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employeeDTO.getEmail(),employeeDTO.getPassword()));
         } catch (NoSuchAlgorithmException ignored) {
@@ -123,9 +156,9 @@ public class EmployeeService {
     }
 
     /**
-     *
-     * @param page
-     * @return
+     * Validates page argument
+     * @param page the page number
+     * @return any positive page number
      */
     private int validatePage(int page){
         if(page < 0)
@@ -134,9 +167,9 @@ public class EmployeeService {
     }
 
     /**
-     *
-     * @param offset
-     * @return
+     * Validates offset argument
+     * @param offset the number of entries per page
+     * @return an int of accepted number of entries per page
      */
     private int validateOffset(int offset) {
         if(offset != 5 && offset != 10 && offset != 25 && offset != 50 && offset != 100)
@@ -160,6 +193,8 @@ public class EmployeeService {
                 return "firstName";
             case "lastname":
                 return "lastName";
+            case "phonenumber":
+                return "phoneNumber";
             default:
                 return "employeeId";
         }

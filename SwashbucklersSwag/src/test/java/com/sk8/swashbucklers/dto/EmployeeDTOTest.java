@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * Testing {@link EmployeeDTO}
+ * @author Nick Zimmerman
+ */
 @SpringBootTest
 public class EmployeeDTOTest {
 

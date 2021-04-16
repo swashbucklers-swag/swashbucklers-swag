@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 /**
- * EmployeeServiceTest class holds the tests for all the methods declared in EmployeeService class
+ * EmployeeServiceTest class holds the tests for all the methods declared in EmployeeService class {@link EmployeeService}
+ * @author Nick Zimmerman
  */
 @SpringBootTest
 public class EmployeeServiceTest {

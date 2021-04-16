@@ -3,8 +3,6 @@ package com.sk8.swashbucklers.integration;
 import com.sk8.swashbucklers.controller.EmployeeController;
 import com.sk8.swashbucklers.model.employee.Employee;
 import com.sk8.swashbucklers.model.employee.Rank;
-import com.sk8.swashbucklers.model.location.Location;
-import com.sk8.swashbucklers.model.location.State;
 import com.sk8.swashbucklers.repo.employee.EmployeeRepository;
 import com.sk8.swashbucklers.repo.location.LocationRepository;
 import org.junit.jupiter.api.Assertions;

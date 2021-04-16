@@ -32,8 +32,6 @@ c
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-E
-SwashbucklersSwag.iml,2\d\2d4b5eae073ae994fae84d9bc8386df8f297bec5
 u
 Esrc/main/java/com/sk8/swashbucklers/SwashbucklersSwagApplication.java,6\7\67f884da96cbd670d6e365fc11efc2f0344b1038
 z

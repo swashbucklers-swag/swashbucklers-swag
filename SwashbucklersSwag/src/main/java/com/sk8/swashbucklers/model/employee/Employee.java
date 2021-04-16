@@ -41,14 +41,24 @@ public class Employee {
     @Setter(AccessLevel.NONE)
     private String password;
     @Size(min = 10, max = 10)
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = false, unique = true)
     private String phoneNumber;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade=CascadeType.ALL)
     private Location location;
-    @Column(nullable = false)
+    @Column(name = "rank", nullable = false)
     private Rank rank;
 
-    public Employee(int employeeId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, @Email String email, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location, Rank rank) {
+    /**
+     * @param employeeId
+     * @param firstName
+     * @param lastName
+     * @param rank
+     * @param password
+     * @param phoneNumber
+     * @param location
+     * @param email
+     */
+    public Employee(int employeeId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, Rank rank, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location, @Email String email) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;

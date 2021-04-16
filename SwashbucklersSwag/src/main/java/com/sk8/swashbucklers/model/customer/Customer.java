@@ -40,7 +40,7 @@ public class Customer {
     @Setter(AccessLevel.NONE)
     private String password;
     @Size(min = 10, max = 10)
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String phoneNumber;
     @ManyToOne(cascade=CascadeType.ALL)
     private Location location;

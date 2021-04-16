@@ -1,4 +1,4 @@
-package com.sk8.swashbucklers.services;
+package com.sk8.swashbucklers.service;
 
 import com.sk8.swashbucklers.dto.CustomerDTO;
 import com.sk8.swashbucklers.model.customer.Customer;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.Optional;

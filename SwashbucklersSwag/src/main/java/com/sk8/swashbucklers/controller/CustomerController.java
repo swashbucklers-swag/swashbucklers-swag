@@ -2,11 +2,15 @@ package com.sk8.swashbucklers.controller;
 
 import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.dto.CustomerDTO;
-import com.sk8.swashbucklers.services.CustomerService;
+import com.sk8.swashbucklers.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for customer endpoints
+ * @author John Stone
+ */
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {

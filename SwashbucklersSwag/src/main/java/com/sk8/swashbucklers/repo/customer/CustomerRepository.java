@@ -12,20 +12,13 @@ import java.util.Optional;
  * Represents the Repository for Customer Model
  *
  * @author Nick Zimmerman
- * updates by John Stone
+ * @author John Stone
  * */
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    /**
-     *
-     * @param customerEmail
-     * @return Customer
-     */
     Optional<Customer> findByEmail(String customerEmail);
-
     Optional<Customer> findByPhoneNumber(String customerPhoneNumber);
-
     Page<Customer> findByLocation_LocationId(int locationId, Pageable pageable);
 }

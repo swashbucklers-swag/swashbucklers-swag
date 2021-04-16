@@ -96,3 +96,13 @@ n
 >src/main/java/com/sk8/swashbucklers/util/JwtRequestFilter.java,0\e\0eec336531902be57d4454e0a3f88dc66af2ab71
 }
 Msrc/test/java/com/sk8/swashbucklers/integration/InventoryIntegrationTest.java,2\f\2f45dba2c660a747a74902e3489a9ca6cc35c0ef
+l
+<src/test/java/com/sk8/swashbucklers/dto/LocationDTOTest.java,b\b\bb4e92ae0c7652f2182b02161dcfcf59a905f812
+m
+=src/test/java/com/sk8/swashbucklers/dto/InventoryDTOTest.java,2\d\2d4e39e364865aca6f8bdb77932024beb0077d21
+u
+Esrc/test/java/com/sk8/swashbucklers/service/InventoryServiceTest.java,7\b\7ba9ec6925efbfaee1159b1ecf9a8d0722292483
+t
+Dsrc/test/java/com/sk8/swashbucklers/service/LocationServiceTest.java,7\9\79cb254b7b9b0eac07d707db67bfe4c3918d2e67
+|
+Lsrc/test/java/com/sk8/swashbucklers/integration/CustomerIntegrationTest.java,a\9\a93ffc4d82bb6d37fa07c24f768480f3aa213370

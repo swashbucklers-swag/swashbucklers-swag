@@ -53,12 +53,12 @@ public class EmployeeController {
     }
 
     /**
-     * Gets all employee's with pagination and sorting
+     * Gets all employeeDTO's with pagination and sorting
      * @param page which page to display
      * @param offset how many entries per page
      * @param sortBy attribute to sort by
      * @param order asc or desc
-     * @return page to be displayed
+     * @return page of EmployeeDTO entries to be displayed
      */
     @GetMapping("/all")
     public Page<EmployeeDTO> getAllEmployee(
@@ -71,7 +71,7 @@ public class EmployeeController {
     }
 
     /**
-     * Gets employee with matching Id
+     * Gets employeeDTO with matching Id
      * @param id the employee's unique Id
      * @return The data transfer representation of the requested employee
      */
@@ -82,9 +82,9 @@ public class EmployeeController {
 
 
     /**
-     * Locates single employee by their email
+     * Locates single employeeDTO by their email
      * @param email the employee's email
-     * @return Employee or null
+     * @return EmployeeDTO or null
      */
     @GetMapping("/email")
     public EmployeeDTO getEmployeeByEmail(@RequestParam(name="email") String email){
@@ -93,13 +93,13 @@ public class EmployeeController {
 
 
     /**
-     * Forwards request of list of employee's of specified rank to service
+     * Retrieves page of EmployeeDTO entries filtered by rank
      * @param rank Employee level (i.e. Manager / Janitor)
      * @param page which page to display
      * @param offset how many entries per page
      * @param sortBy attribute to sort by
      * @param order asc or desc
-     * @return page to be displayed
+     * @return page of EmployeeDTO entries to be displayed
      */
     @GetMapping("/rank/{rank}")
     public Page<EmployeeDTO> getEmployeeByRank(
@@ -113,9 +113,9 @@ public class EmployeeController {
     }
 
     /**
-     * Forwards create employee request to service class
+     * Forwards create employeeDTO request to service class
      * @param employeeDTO dto for incoming employee
-     * @return
+     * @return new EmployeeDTO
      */
     @PostMapping("/create")
     public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO){
@@ -125,9 +125,9 @@ public class EmployeeController {
     }
 
     /**
-     *
-     * @param employeeDTO
-     * @return
+     * Updates given EmployeeDTO such that employeeId is specified
+     * @param employeeDTO EmployeeDTO with employeeId of the Employee to be updated
+     * @return updated EmployeeDTO
      */
     @PutMapping("/update")
     public EmployeeDTO updateEmployeeInfo(@RequestBody EmployeeDTO employeeDTO) {

@@ -9,9 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.util.function.Function;
 
 /**
+ * Represents the Data Transfer Object to encapsulate <br>how an Employee's data is handled during transfer to database
  * @author Nick Zimmerman
  */
 
@@ -21,17 +24,21 @@ import java.util.function.Function;
 public class EmployeeDTO {
 
     private int employeeId;
+    @Size(min = 1)
     private String firstName;
+    @Size(min = 1)
     private String lastName;
+    @Email
     private String email;
     private String password;
+    @Size(min = 10, max = 10)
     private String phoneNumber;
     private Location location;
     private Rank rank;
 
     /**
      * Converts Employee to EmployeeDTO
-     * @return
+     * @return EmployeeDTO
      */
     public static Function<Employee, EmployeeDTO> employeeToDTO(){
         return (employee) -> {
@@ -51,11 +58,17 @@ public class EmployeeDTO {
      * @return Employee
      */
     public static Function<EmployeeDTO, Employee> DTOToEmployee(){
-        return (employeeDTO) -> new Employee(employeeDTO.getEmployeeId(),
+        return (employeeDTO) -> {
+            Assert.notNull(employeeDTO,"employeeDTO cannot be null");
+            return new Employee(employeeDTO.getEmployeeId(),
                 employeeDTO.getFirstName(),
                 employeeDTO.getLastName(),
-                employeeDTO.getRank(), employeeDTO.getPassword(), employeeDTO.getPhoneNumber(), employeeDTO.getLocation(), employeeDTO.getEmail()
-        );
+                employeeDTO.getRank(),
+                employeeDTO.getPassword(),
+                employeeDTO.getPhoneNumber(),
+                employeeDTO.getLocation(),
+                employeeDTO.getEmail());
+        };
     }
 
 }

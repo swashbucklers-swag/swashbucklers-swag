@@ -26,21 +26,21 @@ public class EmployeeService {
 
     private final EmployeeRepository EMPLOYEE_REPO;
 
-    private final PasswordHashingUtil passwordHashingUtil;
+    private final PasswordHashingUtil PASSWORD_HASHING_UTIL;
 
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository, PasswordHashingUtil passwordHashingUtil){
         this.EMPLOYEE_REPO = employeeRepository;
-        this.passwordHashingUtil = passwordHashingUtil;
+        this.PASSWORD_HASHING_UTIL = passwordHashingUtil;
     }
 
     /**
-     * Returns list of all employee's
+     * Queries all Employee's from the database and maps them to EmployeeDTO
      * @param page which page to display
      * @param offset how many entries per page
      * @param sortBy attribute to sort by
      * @param order asc or desc
-     * @return page to be displayed
+     * @return page of EmployeeDTO entries to be displayed
      */
     public Page<EmployeeDTO> getAllEmployee(int page, int offset, String sortBy, String order){
         page = validatePage(page);
@@ -60,7 +60,7 @@ public class EmployeeService {
     /**
      * Locates single employee by their Id
      * @param employeeId the employee's id
-     * @return Employee or null
+     * @return EmployeeDTO or null
      *
      */
     public EmployeeDTO getEmployeeById(int employeeId){
@@ -72,7 +72,7 @@ public class EmployeeService {
     /**
      * Locates single employee by their email
      * @param email the employee's email
-     * @return Employee or null
+     * @return EmployeeDTO or null
      */
     public EmployeeDTO getEmployeeByEmail(String email){
         Optional<Employee> requested = EMPLOYEE_REPO.findByEmail(email);
@@ -80,8 +80,8 @@ public class EmployeeService {
     }
 
     /**
-     * Returns list of employee's of specified rank
-     * @param rank Employee level (i.e. Manager / Janitor)
+     * Queries all Employee's of specified rank and maps them into EmployeeDTO's
+     * @param rank Employee Rank (CAPTAIN/CREW/LANDLUBBER)
      * @param page which page to display
      * @param offset how many entries per page
      * @param sortBy attribute to sort by
@@ -92,7 +92,6 @@ public class EmployeeService {
         page = validatePage(page);
         offset = validateOffset(offset);
         sortBy = validateSortBy(sortBy);
-        //Rank r;
 
         try{
             Rank r = Rank.valueOf(rank.toUpperCase());
@@ -112,15 +111,15 @@ public class EmployeeService {
     }
 
     /**
-     * Create Employee
-     * @param employee new employee to be persisted
-     * @return EmployeeDTO upon successful persistence
+     * Creates new Employee from the passed in Employee object
+     * @param employee Employee object with data of Employee to be persisted
+     * @return EmployeeDTO converted from Employee upon successful persistence
      */
     public EmployeeDTO createEmployee(Employee employee){
         try {
-            employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employee.getEmail(), employee.getPassword()));
+            employee.setPassword(PASSWORD_HASHING_UTIL.hashPasswordWithEmail(employee.getEmail(), employee.getPassword()));
         } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"email and/or password credentials are not valid");
         }
         Employee saved = EMPLOYEE_REPO.save(employee);
         return EmployeeDTO.employeeToDTO().apply(saved);
@@ -145,9 +144,9 @@ public class EmployeeService {
         employee.setEmail(employeeDTO.getEmail());
         employee.setRank(employeeDTO.getRank());
         try {
-            employee.setPassword(passwordHashingUtil.hashPasswordWithEmail(employeeDTO.getEmail(),employeeDTO.getPassword()));
+            employee.setPassword(PASSWORD_HASHING_UTIL.hashPasswordWithEmail(employeeDTO.getEmail(),employeeDTO.getPassword()));
         } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"email and/or password credentials are not valid");
         }
         employee.setPhoneNumber(employeeDTO.getPhoneNumber());
         employee.setLocation(employeeDTO.getLocation());
@@ -195,6 +194,12 @@ public class EmployeeService {
                 return "lastName";
             case "phonenumber":
                 return "phoneNumber";
+            case "city":
+                return "location.city";
+            case "state":
+                return "location.state";
+            case "zip":
+                return "location.zip";
             default:
                 return "employeeId";
         }

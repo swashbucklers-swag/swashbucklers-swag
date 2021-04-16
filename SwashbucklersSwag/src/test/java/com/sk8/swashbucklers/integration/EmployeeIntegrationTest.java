@@ -3,7 +3,10 @@ package com.sk8.swashbucklers.integration;
 import com.sk8.swashbucklers.controller.EmployeeController;
 import com.sk8.swashbucklers.model.employee.Employee;
 import com.sk8.swashbucklers.model.employee.Rank;
+import com.sk8.swashbucklers.model.location.Location;
+import com.sk8.swashbucklers.model.location.State;
 import com.sk8.swashbucklers.repo.employee.EmployeeRepository;
+import com.sk8.swashbucklers.repo.location.LocationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 public class EmployeeIntegrationTest {
 
     private MockMvc mockMvc;
+
+    @Autowired
+    private LocationRepository locationRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -90,7 +96,7 @@ public class EmployeeIntegrationTest {
         employeeRepository.save(emp1);
         employeeRepository.save(emp2);
         mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all?page=0&offset=50&sortby=\"quantity\"&order=\"DESC\"")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all?page=0&offset=100&sortby=\"firstName\"&order=\"DESC\"")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -117,7 +123,184 @@ public class EmployeeIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.unsorted").value(false))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.empty").value(false))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageNumber").value(0))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageSize").value(50))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageSize").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.paged").value(true))
+                .andReturn();
+
+        System.out.println("\n"+result.getResponse().getContentAsString()+"\n");
+
+    }
+
+    @Test
+    void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination1() throws Exception {
+        Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
+        Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
+
+        employeeRepository.save(emp1);
+        employeeRepository.save(emp2);
+        mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all?page=0&offset=25&sortby=\"email\"&order=\"ASC\"")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").isNotEmpty())
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[1].employeeId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].firstName").value("Michael"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].lastName").value("Scott"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].email").value("mkscott@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].phoneNumber").value("5704289173"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].rank").value("CAPTAIN"))
+
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[2].employeeId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].firstName").value("Dwight"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].lastName").value("Schrute"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].email").value("dwschrute@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].phoneNumber").value("5704577896"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].rank").value("CREW"))
+
+
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.sorted").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.unsorted").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.empty").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageNumber").value(0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageSize").value(25))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.paged").value(true))
+                .andReturn();
+
+        System.out.println("\n"+result.getResponse().getContentAsString()+"\n");
+
+    }
+
+    @Test
+    void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination2() throws Exception {
+        Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
+        Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
+
+        employeeRepository.save(emp1);
+        employeeRepository.save(emp2);
+        mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all?page=0&offset=10&sortby=\"lastName\"&order=\"DESC\"")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").isNotEmpty())
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[1].employeeId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].firstName").value("Michael"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].lastName").value("Scott"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].email").value("mkscott@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].phoneNumber").value("5704289173"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].rank").value("CAPTAIN"))
+
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[2].employeeId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].firstName").value("Dwight"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].lastName").value("Schrute"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].email").value("dwschrute@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].phoneNumber").value("5704577896"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].rank").value("CREW"))
+
+
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.sorted").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.unsorted").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.empty").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageNumber").value(0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageSize").value(10))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.paged").value(true))
+                .andReturn();
+
+        System.out.println("\n"+result.getResponse().getContentAsString()+"\n");
+
+    }
+
+    @Test
+    void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination3() throws Exception {
+        Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
+        Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
+
+        employeeRepository.save(emp1);
+        employeeRepository.save(emp2);
+        mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all?page=0&offset=5&sortby=\"phoneNumber\"&order=\"ASC\"")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").isNotEmpty())
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[1].employeeId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].firstName").value("Michael"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].lastName").value("Scott"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].email").value("mkscott@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].phoneNumber").value("5704289173"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].rank").value("CAPTAIN"))
+
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[2].employeeId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].firstName").value("Dwight"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].lastName").value("Schrute"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].email").value("dwschrute@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].phoneNumber").value("5704577896"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].rank").value("CREW"))
+
+
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.sorted").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.unsorted").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.empty").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageNumber").value(0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageSize").value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.paged").value(true))
+                .andReturn();
+
+        System.out.println("\n"+result.getResponse().getContentAsString()+"\n");
+
+    }
+
+    @Test
+    void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination4() throws Exception {
+//        Location location = new Location(0,"3324 Berton","Scranton", State.PA,"18505");
+//        Location location2 = new Location(0,"3296 Kiplin","Utica", State.PA,"18505");
+
+
+
+        Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
+        Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
+
+        employeeRepository.save(emp1);
+        employeeRepository.save(emp2);
+        mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all?page=0&offset=5&sortby=\"city\"&order=\"ASC\"")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].employeeId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].firstName").value("Michael"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].lastName").value("Scott"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].email").value("mkscott@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].phoneNumber").value("5704289173"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].rank").value("CAPTAIN"))
+
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.content[2].employeeId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].firstName").value("Dwight"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].lastName").value("Schrute"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].email").value("dwschrute@dunder.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].password").value(""))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].phoneNumber").value("5704577896"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].rank").value("CREW"))
+
+
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.sorted").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.unsorted").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.sort.empty").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageNumber").value(0))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.pageSize").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.pageable.paged").value(true))
                 .andReturn();
 

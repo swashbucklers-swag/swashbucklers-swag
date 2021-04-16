@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * EmployeeServiceTest class holds the tests for all the methods declared in EmployeeService class
+ */
 @SpringBootTest
 public class EmployeeServiceTest {
 
@@ -103,7 +107,7 @@ public class EmployeeServiceTest {
         Mockito.when(employeeRepository.findByRankEquals(org.mockito.ArgumentMatchers.eq(Rank.CAPTAIN), org.mockito.ArgumentMatchers.isA(Pageable.class))).thenReturn(captains);
         Mockito.when(employeeRepository.findByRankEquals(org.mockito.ArgumentMatchers.eq(Rank.CREW), org.mockito.ArgumentMatchers.isA(Pageable.class))).thenReturn(crews);
 
-        Page<EmployeeDTO> response = employeeService.getEmployeeByRank("CAPTAIN", 0, 25, "email", "DESC");
+        Page<EmployeeDTO> response = employeeService.getEmployeeByRank("CAPTAIN", 0, 25, "email", "ASC");
 
         Assertions.assertNotNull(response);
         Assertions.assertEquals(1, response.getContent().get(0).getEmployeeId());
@@ -119,7 +123,7 @@ public class EmployeeServiceTest {
 
         System.out.println(response.getContent());
 
-        response = employeeService.getEmployeeByRank("CREW", 0, 25, "email", "DESC");
+        response = employeeService.getEmployeeByRank("CREW", 0, 100, "email", "DESC");
 
         Assertions.assertNotNull(response);
         Assertions.assertEquals(2, response.getContent().get(0).getEmployeeId());

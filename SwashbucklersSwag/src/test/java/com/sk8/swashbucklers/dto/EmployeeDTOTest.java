@@ -1,5 +1,6 @@
-package com.sk8.swashbucklers.dto;
+package com.sk8.swashbucklers.DTO;
 
+import com.sk8.swashbucklers.dto.EmployeeDTO;
 import com.sk8.swashbucklers.model.employee.Employee;
 import com.sk8.swashbucklers.model.employee.Rank;
 import org.junit.jupiter.api.Assertions;

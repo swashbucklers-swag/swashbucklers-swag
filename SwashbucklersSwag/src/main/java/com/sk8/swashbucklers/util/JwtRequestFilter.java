@@ -1,6 +1,6 @@
 package com.sk8.swashbucklers.util;
 
-import com.sk8.swashbucklers.services.SwagUserDetailsService;
+import com.sk8.swashbucklers.service.SwagUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

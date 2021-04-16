@@ -1,4 +1,4 @@
-package com.sk8.swashbucklers.services;
+package com.sk8.swashbucklers.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

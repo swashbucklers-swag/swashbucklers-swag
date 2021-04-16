@@ -2,7 +2,7 @@ package com.sk8.swashbucklers.controller;
 
 import com.sk8.swashbucklers.model.authentication.AuthenticationRequest;
 import com.sk8.swashbucklers.model.authentication.AuthenticationResponse;
-import com.sk8.swashbucklers.services.SwagUserDetailsService;
+import com.sk8.swashbucklers.service.SwagUserDetailsService;
 import com.sk8.swashbucklers.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +30,6 @@ public class LoginController {
 
     @Autowired
     private SwagUserDetailsService userDetailsService;
-
-    @RequestMapping({"/hello"})
-    public String firstPage() {
-        return "Hello World";
-    }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {

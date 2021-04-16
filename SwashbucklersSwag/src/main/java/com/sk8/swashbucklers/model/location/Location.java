@@ -8,10 +8,9 @@ import javax.validation.constraints.Size;
 /**
  * Represents a location with necessary information for the delivery of a package
  *
- * @author Edson Rodriguez
  * @author Daniel Bernier
+ * @author Edson Rodriguez
  */
-
 @Entity
 @Table(name = "locations")
 @Data

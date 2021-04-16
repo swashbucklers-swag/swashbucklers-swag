@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 
 /**
  * Data transfer object for login information
+ *
  * @author Daniel Bernier
  */
 @Data

@@ -40,9 +40,9 @@ public class Customer {
     @Setter(AccessLevel.NONE)
     private String password;
     @Size(min = 10, max = 10)
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String phoneNumber;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Location location;
 
     public Customer(int customerId, @Size(min = 1) String firstName, @Size(min = 1) String lastName, @Email String email, @Size(min = 1) String password, @Size(min = 10, max = 10) String phoneNumber, Location location) {

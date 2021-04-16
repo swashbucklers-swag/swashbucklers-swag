@@ -1,6 +1,5 @@
-package com.sk8.swashbucklers.DTO;
+package com.sk8.swashbucklers.dto;
 
-import com.sk8.swashbucklers.dto.CustomerDTO;
 import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.model.location.Location;
 import com.sk8.swashbucklers.model.location.State;

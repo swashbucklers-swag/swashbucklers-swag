@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/clock")
-public class ClockController {
-
-
-
-    public ResponseEntity<?> getAll()
+public class TimesheetController {
 
 }

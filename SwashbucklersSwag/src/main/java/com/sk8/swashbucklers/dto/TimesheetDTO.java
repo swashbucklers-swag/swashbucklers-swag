@@ -11,7 +11,10 @@ import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.function.Function;
 
-
+/**
+ * Timesheet data transfer object for timesheets {@link com.sk8.swashbucklers.service.TimesheetService}
+ * @author Edson Rodriguez
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -13,22 +13,12 @@ import java.util.Optional;
  * Represents the Repository for Timesheet Model
  *
  * @author Nick Zimmerman
+ * @author Edson Rodriguez
  * */
 
 @Repository
 public interface TimesheetRepository extends JpaRepository<Timesheet, Integer> {
 
-    /**
-     *
-     * @return Timesheet requested from employee email
-     */
-
-
-    Optional<Timesheet> findByClockOutIsNull(Employee emp);
-    Page<Timesheet> findByEmployee_EmployeeId(int employeeId, Pageable pageable);
-
-    //do I need this?
-    Optional<Timesheet> findByEmployee_Email(String employeeEmail);
-
-
+    Optional<Timesheet> findByEmployeeAndClockOutIsNull(final Employee emp);
+    Page<Timesheet> findByEmployee_EmployeeId(final int employeeId, Pageable pageable);
 }

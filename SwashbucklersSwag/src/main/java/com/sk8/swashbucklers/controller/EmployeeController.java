@@ -6,6 +6,8 @@ import com.sk8.swashbucklers.model.employee.Employee;
 import com.sk8.swashbucklers.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employee")
+@Secured("ROLE_CAPTAIN")
 public class EmployeeController {
 
     private final EmployeeService EMPLOYEE_SERVICE;

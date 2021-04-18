@@ -8,16 +8,12 @@ import org.springframework.stereotype.Repository;
  * Represents the Repository for OrderDetails Model
  *
  * @author Nick Zimmerman
+ * @author Steven Ceglarek
  * */
 
 @Repository
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Integer> {
 
-    /**
-     *
-     * @param orderId
-     * @return Order Details determined by order Id
-     */
     OrderDetails findByOrder_OrderId(Integer orderId);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
  * Represents the Repository for StatusHistory Model
  *
  * @author Nick Zimmerman
+ * @author Steven Ceglarek
  * */
 
 @Repository

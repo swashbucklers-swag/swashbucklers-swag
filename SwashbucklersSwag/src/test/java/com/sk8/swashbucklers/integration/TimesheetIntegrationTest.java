@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:test-application.properties")
-public class TimesheetIntegrationTest {
+class TimesheetIntegrationTest {
 
     private MockMvc mockMvc;
 

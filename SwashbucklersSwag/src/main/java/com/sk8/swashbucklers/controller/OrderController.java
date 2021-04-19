@@ -1,16 +1,11 @@
 package com.sk8.swashbucklers.controller;
 
 import com.sk8.swashbucklers.dto.*;
-import com.sk8.swashbucklers.model.item.Inventory;
-import com.sk8.swashbucklers.model.order.Order;
-import com.sk8.swashbucklers.model.order.StatusHistory;
-import com.sk8.swashbucklers.service.InventoryService;
+import com.sk8.swashbucklers.model.order.OrderStatus;
 import com.sk8.swashbucklers.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Controller for order resource utilizing {@link OrderService}
@@ -130,12 +125,8 @@ public class OrderController {
          * @return The data transfer representation of the newly added inventory object
          */
         @PostMapping("/create")
-        public OrderDTO createNewOrder(@RequestBody OrderDTO orderDTO){
-            orderDTO.setOrderId(0);
-
-            Order o = OrderDTO.DTOToOrder().apply(orderDTO);
-            List<StatusHistory> statusHistoryList = o.getStatusHistory();
-            return ORDER_SERVICE.createNewOrder(o);
+        public OrderDTO createNewOrder(@RequestBody OrderCreateDTO orderCreateDTO){
+            return ORDER_SERVICE.createNewOrder(orderCreateDTO);
         }
 
         /**
@@ -144,8 +135,10 @@ public class OrderController {
          * @return The data transfer representation of the newly updated inventory
          */
         @PutMapping("/update-status/{historyId}")
-        public OrderDTO updateOrderStatus(@PathVariable(name = "historyId") int historyId, StatusHistoryDTO statusHistoryDTO){
-            return ORDER_SERVICE.updateOrderStatus(statusHistoryDTO, historyId);
+        public OrderDTO updateOrderStatus(@PathVariable(name = "historyId") int historyId, OrderStatus orderStatus){
+            return ORDER_SERVICE.updateOrderStatus(orderStatus, historyId);
         }
+
+
 
     }

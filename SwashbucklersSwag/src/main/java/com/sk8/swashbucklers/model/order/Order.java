@@ -2,9 +2,7 @@ package com.sk8.swashbucklers.model.order;
 
 import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.model.location.Location;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -43,5 +41,7 @@ public class Order {
     @Column(name = "history_id", nullable = false)
     private List<StatusHistory> statusHistory;
     @OneToMany(mappedBy = "order")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<OrderDetails> orderDetails;
 }

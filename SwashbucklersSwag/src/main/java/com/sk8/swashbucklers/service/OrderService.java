@@ -1,13 +1,15 @@
 package com.sk8.swashbucklers.service;
 
 import com.sk8.swashbucklers.dto.*;
+import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.model.item.Inventory;
-import com.sk8.swashbucklers.model.location.Location;
+import com.sk8.swashbucklers.model.item.Item;
 import com.sk8.swashbucklers.model.order.Order;
 import com.sk8.swashbucklers.model.order.OrderDetails;
+import com.sk8.swashbucklers.model.order.OrderStatus;
 import com.sk8.swashbucklers.model.order.StatusHistory;
+import com.sk8.swashbucklers.repo.customer.CustomerRepository;
 import com.sk8.swashbucklers.repo.item.InventoryRepository;
-import com.sk8.swashbucklers.repo.location.LocationRepository;
 import com.sk8.swashbucklers.repo.order.OrderDetailsRepository;
 import com.sk8.swashbucklers.repo.order.OrderRepository;
 import com.sk8.swashbucklers.repo.order.StatusHistoryRepository;
@@ -15,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.*;
 
 /**
  * Service for getting locations with various constraints
@@ -32,6 +36,9 @@ public class OrderService {
     private final OrderRepository ORDER_REPO;
     private final OrderDetailsRepository ORDER_DETAILS_REPO;
     private final StatusHistoryRepository STATUS_HISTORY_REPO;
+    private final InventoryRepository INVENTORY_REPO;
+    private final CustomerRepository CUSTOMER_REPO;
+
 
 
     /**
@@ -41,10 +48,14 @@ public class OrderService {
     @Autowired
     public OrderService(OrderRepository orderRepository,
                         OrderDetailsRepository orderDetailsRepository,
-                        StatusHistoryRepository statusHistoryRepository){
+                        StatusHistoryRepository statusHistoryRepository,
+                        InventoryRepository inventoryRepository,
+                        CustomerRepository customerRepository){
         this.ORDER_REPO = orderRepository;
         this.ORDER_DETAILS_REPO = orderDetailsRepository;
         this.STATUS_HISTORY_REPO = statusHistoryRepository;
+        this.INVENTORY_REPO = inventoryRepository;
+        this.CUSTOMER_REPO = customerRepository;
     }
 
     /**
@@ -128,11 +139,37 @@ public class OrderService {
      * @param order The Inventory object being persisted
      * @return The newly persisted inventory object converted to its data transfer representation using {@link OrderDTO#OrderToDTO()}
      */
-    public OrderDTO createNewOrder(Order order){
-//        OrderDetails orderDetails = new OrderDetails(0, order.getOrderId(), order.get);
-
-//        ORDER_DETAILS_REPO.save(order.getOrderDetails().toArray()));
-        Order saved = ORDER_REPO.save(order);
+    public OrderDTO createNewOrder(OrderCreateDTO orderCreateDTO){
+        Set<OrderDetails> orderDetailsSet = detailsConversion(orderCreateDTO.getOrderDetailsDTOSet());
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            Optional<Inventory> optionalInventory = INVENTORY_REPO.findByItem_ItemId(orderDetails.getItem().getItemId());
+            if (!optionalInventory.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not find a valid item id with the order given");
+            }
+            if (orderDetails.getItem().getItemId() == optionalInventory.get().getItem().getItemId()) {
+                Inventory inventory = optionalInventory.get();
+                int q1 = orderDetails.getQuantity();
+                int q2 = inventory.getQuantity();
+                q2 -= q1;
+                if (q2 < 0) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insufficient quantity on item requested");
+                } else {
+                    inventory.setQuantity(q2);
+                    INVENTORY_REPO.save(inventory);
+                }
+            }
+        }
+        Optional<Customer> customerOptional = CUSTOMER_REPO.findById(orderCreateDTO.getCustomerId());
+        if (!customerOptional.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not find a valid customer id with the order given");
+        }
+        Order newOrder = new Order(0, customerOptional.get(), orderCreateDTO.getLocation(),
+                Timestamp.from(Instant.now()), new ArrayList<>(Collections.singletonList(new StatusHistory(0,
+                OrderStatus.PROCESSING_ORDER, Timestamp.from(Instant.now())))), orderDetailsSet);
+        for (OrderDetails orderDetails : newOrder.getOrderDetails()) {
+            orderDetails.setOrder(newOrder);
+        }
+        Order saved = ORDER_REPO.save(newOrder);
         return OrderDTO.OrderToDTO().apply(saved);
     }
 
@@ -141,24 +178,31 @@ public class OrderService {
      * @param statusHistoryDTO order status being updated
      * @return Data transfer representation of updated object
      */
-    public OrderDTO updateOrderStatus(StatusHistoryDTO statusHistoryDTO, int historyId){
-        Optional<Order> orderOptional = ORDER_REPO.findByStatusHistory_historyId(historyId);
+    public OrderDTO updateOrderStatus(OrderStatus orderStatus, int orderId){
+        Optional<Order> orderOptional = ORDER_REPO.findById(orderId);
 
         if(!orderOptional.isPresent()) {
-            System.out.println("Hey there");
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not find a valid order with the order id given");
         }
-        //updating fields
         Order order = orderOptional.get();
-
-        List<StatusHistory> statusHistoryList = order.getStatusHistory();
-        statusHistoryList.add(StatusHistoryDTO.DTOToStatusHistory().apply(statusHistoryDTO));
-        order.setStatusHistory(statusHistoryList);
-
+        order.getStatusHistory().add(new StatusHistory(0, orderStatus, Timestamp.from(Instant.now())));
         return OrderDTO.OrderToDTO().apply(ORDER_REPO.save(order));
     }
 
 
+    public Set<OrderDetails> detailsConversion(Set<OrderDetailsDTO> orderDetailsDTOSet) {
+        Set<OrderDetails> orderDetailsSet = new HashSet<>();
+        for (OrderDetailsDTO o : orderDetailsDTOSet) {
+            Optional<Inventory> optionalInventory = INVENTORY_REPO.findByItem_ItemId(o.getItemID());
+            if (!optionalInventory.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not find a valid item id with the order given");
+            }
+            Item i = optionalInventory.get().getItem();
+            orderDetailsSet.add(new OrderDetails(0, i, o.getQuantity()));
+        }
+        return orderDetailsSet;
+
+    }
 
 
     /**

@@ -26,7 +26,12 @@ public class SwagUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<Employee> e = employeeRepository.findByEmail(s);
+        //TODO: Set up our user Repo.
+        SimpleGrantedAuthority auth = Rank.toAuth(Rank.CAPTAIN);
+        ArrayList<SimpleGrantedAuthority> arrayList = new ArrayList<>();
+        arrayList.add(auth);
+        return new User("admin@mail.com", "pass", arrayList);
+/*        Optional<Employee> e = employeeRepository.findByEmail(s);
         if (e.isPresent()) {
             SimpleGrantedAuthority auth = Rank.toAuth(e.get().getRank());
             ArrayList<SimpleGrantedAuthority> arrayList = new ArrayList<>();
@@ -34,6 +39,6 @@ public class SwagUserDetailsService implements UserDetailsService {
             return new User(e.get().getEmail(), e.get().getPassword(), arrayList);
         } else {
             throw new UsernameNotFoundException("Username not found");
-        }
+        }*/
     }
 }

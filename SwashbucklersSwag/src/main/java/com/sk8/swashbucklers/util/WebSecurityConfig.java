@@ -3,6 +3,7 @@ package com.sk8.swashbucklers.util;
 import com.sk8.swashbucklers.service.SwagUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,10 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Class that handles intercepting requests to the site if the user is not authenticated
  */
 
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -40,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password("adminPass")
+                .password(passwordEncoder().encode("adminPass"))
                 .roles("CAPTAIN");
         //auth.userDetailsService(userDetailsService);
     }

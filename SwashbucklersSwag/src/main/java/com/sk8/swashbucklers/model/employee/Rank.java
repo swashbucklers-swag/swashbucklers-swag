@@ -1,5 +1,7 @@
 package com.sk8.swashbucklers.model.employee;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 /**
  * Represents an employees rank, and thus their level of permissions
  *
@@ -8,5 +10,8 @@ package com.sk8.swashbucklers.model.employee;
 public enum Rank{
     CREW,
     CAPTAIN,
-    LANDLUBBER
+    LANDLUBBER;
+    public static SimpleGrantedAuthority toAuth(Rank r) {
+        return new SimpleGrantedAuthority(r.toString());
+    }
 }

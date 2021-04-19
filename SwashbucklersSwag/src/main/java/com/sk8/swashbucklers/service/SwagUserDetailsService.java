@@ -33,7 +33,8 @@ public class SwagUserDetailsService implements UserDetailsService {
             arrayList.add(auth);
             return new User(e.get().getEmail(),e.get().getPassword(), arrayList);
         } else {
-            throw new UsernameNotFoundException("Email not found");
+            throw new UsernameNotFoundException("Username not found");
         }
     }
+
 }

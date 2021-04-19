@@ -55,21 +55,28 @@ public class OrderServiceTest {
     @Test
     public void whenGetAllOrder_returnsPageOfOrderDTO() {
         List<Order> orderArrayList = new ArrayList<>();
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        OrderDetails orderDetails = new OrderDetails(
-                0, new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25), 10 );
-        Set<OrderDetails> orderDetailsSet = new HashSet<>();
-        orderDetailsSet.add(orderDetails);
+        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        Order order = new Order(0, c, l, ts, statusHistoryList, orderDetailsSet);
-        orderArrayList.add(order);
+        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
+        Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
+        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
+        Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            orderDetails.setOrder(newOrder);
+        }
+        orderArrayList.add(newOrder);
+
         Page<Order> orderPage = new PageImpl<>(orderArrayList);
-        System.out.println(orderPage.getContent());
 
         Mockito.when(orderRepository.findAll(org.mockito.ArgumentMatchers.isA(Pageable.class))).thenReturn(orderPage);
 
@@ -134,21 +141,27 @@ public class OrderServiceTest {
 
     @Test
     void whenGetByOrderID_returnsOrderDTO(){
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        OrderDetails orderDetails = new OrderDetails(
-                0, new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25), 10 );
-        Set<OrderDetails> orderDetailsSet = new HashSet<>();
+        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        Order order = new Order(0, c, l, ts, statusHistoryList, orderDetailsSet);
-        orderDetails.setOrder(order);
-        order.getOrderDetails().add(orderDetails);
+        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
+        Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
+        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
+        Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            orderDetails.setOrder(newOrder);
+        }
 
-        Mockito.when(orderRepository.findById(0)).thenReturn(Optional.of(order));
+        Mockito.when(orderRepository.findById(0)).thenReturn(Optional.of(newOrder));
         Mockito.when(orderRepository.findById(255)).thenReturn(Optional.empty());
 
         OrderDTO response = orderService.getOrderById(0);
@@ -169,20 +182,26 @@ public class OrderServiceTest {
     @Test
     void whenGetByCustomerID_returnsOrderDTO(){
         List<Order> orderArrayList = new ArrayList<>();
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        OrderDetails orderDetails = new OrderDetails(
-                0, new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25), 10 );
-        Set<OrderDetails> orderDetailsSet = new HashSet<>();
+        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        Order order = new Order(0, c, l, ts, statusHistoryList, orderDetailsSet);
-        orderDetails.setOrder(order);
-        order.getOrderDetails().add(orderDetails);
-        orderArrayList.add(order);
+        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
+        Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
+        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
+        Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            orderDetails.setOrder(newOrder);
+        }
+        orderArrayList.add(newOrder);
         Page<Order> orderPage = new PageImpl<>(orderArrayList);
 
         Mockito.when(orderRepository.getByCustomer_CustomerId(org.mockito.ArgumentMatchers.isA(Integer.class), org.mockito.ArgumentMatchers.isA(Pageable.class))).thenReturn(orderPage);
@@ -211,20 +230,26 @@ public class OrderServiceTest {
     @Test
     void whenGetByLocationID_returnsOrderDTO(){
         List<Order> orderArrayList = new ArrayList<>();
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        OrderDetails orderDetails = new OrderDetails(
-                0, new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25), 10 );
-        Set<OrderDetails> orderDetailsSet = new HashSet<>();
+        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        Order order = new Order(0, c, l, ts, statusHistoryList, orderDetailsSet);
-        orderDetails.setOrder(order);
-        order.getOrderDetails().add(orderDetails);
-        orderArrayList.add(order);
+        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
+        Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
+        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
+        Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            orderDetails.setOrder(newOrder);
+        }
+        orderArrayList.add(newOrder);
         Page<Order> orderPage = new PageImpl<>(orderArrayList);
 
         Mockito.when(orderRepository.getByLocation_LocationId(org.mockito.ArgumentMatchers.isA(Integer.class), org.mockito.ArgumentMatchers.isA(Pageable.class))).thenReturn(orderPage);

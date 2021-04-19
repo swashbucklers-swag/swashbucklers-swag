@@ -32,7 +32,7 @@ public class Order {
     private int orderId;
     @ManyToOne
     private Customer customer;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Location location;
     @CreationTimestamp
     @Column(name = "date_of_order", nullable = false)

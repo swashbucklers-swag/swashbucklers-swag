@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edd0a450-69e2-4ab9-b6e9-1a557e3040cc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/test/java/com/sk8/swashbucklers/integration/OrderIntegrationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/dto/OrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/model/order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/model/order/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/test/java/com/sk8/swashbucklers/service/OrderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/test/java/com/sk8/swashbucklers/service/OrderServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,34 +44,50 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
-  <component name="RunManager" selected="JUnit.OrderServiceTest.whenCreateNewOrder_returnsNewlyCreatedOrderDTO">
-    <configuration name="OrderServiceTest.whenCreateNewOrder_returnsNewlyCreatedOrderDTO" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.OrderIntegrationTest.givenOrder_whenGetAll_thenOrderRetrieved">
+    <configuration name="OrderIntegrationTest.givenOrder_whenGetAll_thenORderRetrieved" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="swashbucklers" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sk8.swashbucklers.service.*" />
+          <option name="PATTERN" value="com.sk8.swashbucklers.integration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.service" />
-      <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.service.OrderServiceTest" />
-      <option name="METHOD_NAME" value="whenCreateNewOrder_returnsNewlyCreatedOrderDTO" />
+      <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.integration.OrderIntegrationTest" />
+      <option name="METHOD_NAME" value="givenOrder_whenGetAll_thenORderRetrieved" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OrderServiceTest.whenGetAllOrder_returnsPageOfOrderDTO" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OrderIntegrationTest.givenOrder_whenGetAll_thenOrderRetrieved" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="swashbucklers" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sk8.swashbucklers.service.*" />
+          <option name="PATTERN" value="com.sk8.swashbucklers.integration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.service" />
-      <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.service.OrderServiceTest" />
-      <option name="METHOD_NAME" value="whenGetAllOrder_returnsPageOfOrderDTO" />
+      <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.integration.OrderIntegrationTest" />
+      <option name="METHOD_NAME" value="givenOrder_whenGetAll_thenOrderRetrieved" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderIntegrationTest.whenDefaultMapping_thenDirectoryDisplayed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="swashbucklers" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sk8.swashbucklers.integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.integration.OrderIntegrationTest" />
+      <option name="METHOD_NAME" value="whenDefaultMapping_thenDirectoryDisplayed" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -104,22 +120,6 @@
       <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.service" />
       <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.service.OrderServiceTest" />
       <option name="METHOD_NAME" value="whenGetByLocationID_returnsOrderDTO" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OrderServiceTest.whenGetByOrderID_returnsOrderDTO" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="swashbucklers" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sk8.swashbucklers.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.sk8.swashbucklers.service" />
-      <option name="MAIN_CLASS_NAME" value="com.sk8.swashbucklers.service.OrderServiceTest" />
-      <option name="METHOD_NAME" value="whenGetByOrderID_returnsOrderDTO" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -174,11 +174,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.OrderServiceTest.whenCreateNewOrder_returnsNewlyCreatedOrderDTO" />
+        <item itemvalue="JUnit.OrderIntegrationTest.givenOrder_whenGetAll_thenOrderRetrieved" />
+        <item itemvalue="JUnit.OrderIntegrationTest.whenDefaultMapping_thenDirectoryDisplayed" />
+        <item itemvalue="JUnit.OrderIntegrationTest.givenOrder_whenGetAll_thenORderRetrieved" />
         <item itemvalue="JUnit.OrderServiceTest.whenGetByLocationID_returnsOrderDTO" />
         <item itemvalue="JUnit.OrderServiceTest.whenGetByCustomerID_returnsOrderDTO" />
-        <item itemvalue="JUnit.OrderServiceTest.whenGetByOrderID_returnsOrderDTO" />
-        <item itemvalue="JUnit.OrderServiceTest.whenGetAllOrder_returnsPageOfOrderDTO" />
       </list>
     </recent_temporary>
   </component>

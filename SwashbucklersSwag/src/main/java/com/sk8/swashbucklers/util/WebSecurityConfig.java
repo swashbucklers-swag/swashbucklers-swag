@@ -25,19 +25,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private final SwagUserDetailsService userDetailsService;
 
-    private final JwtTokenFilter jwtTokenFilter;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
-    public WebSecurityConfig(SwagUserDetailsService userDetailsService, JwtTokenFilter jwtTokenfilter) {
+    public WebSecurityConfig(SwagUserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.userDetailsService = userDetailsService;
-        this.jwtTokenFilter = jwtTokenfilter;
+        this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(username -> userDetailsService.loadUserByUsername(username)
-                );
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password("adminPass")
+                .roles("CAPTAIN");
+        //auth.userDetailsService(userDetailsService);
     }
 
     @Bean
@@ -53,13 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity = httpSecurity.cors().and().csrf().disable();
-        httpSecurity.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers("/login/**").permitAll()
-                .anyRequest().authenticated();
+        httpSecurity.csrf().disable()
+                .authorizeRequests().antMatchers("/login/**").permitAll().
+                anyRequest().authenticated().and().
+                exceptionHandling().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         httpSecurity.addFilterBefore(
-                jwtTokenFilter,
+                jwtRequestFilter,
                 UsernamePasswordAuthenticationFilter.class
         );
     }

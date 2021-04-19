@@ -31,10 +31,9 @@ public class SwagUserDetailsService implements UserDetailsService {
             SimpleGrantedAuthority auth = Rank.toAuth(e.get().getRank());
             ArrayList<SimpleGrantedAuthority> arrayList = new ArrayList<>();
             arrayList.add(auth);
-            return new User(e.get().getEmail(),e.get().getPassword(), arrayList);
+            return new User(e.get().getEmail(), e.get().getPassword(), arrayList);
         } else {
             throw new UsernameNotFoundException("Username not found");
         }
     }
-
 }

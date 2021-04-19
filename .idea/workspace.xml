@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edd0a450-69e2-4ab9-b6e9-1a557e3040cc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/dto/OrderCreateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/dto/OrderDetailsDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/model/order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/model/order/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/model/order/OrderDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/model/order/OrderDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/dto/OrderDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/main/java/com/sk8/swashbucklers/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SwashbucklersSwag/src/test/java/com/sk8/swashbucklers/service/OrderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SwashbucklersSwag/src/test/java/com/sk8/swashbucklers/service/OrderServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

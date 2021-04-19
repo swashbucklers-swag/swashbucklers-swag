@@ -26,7 +26,7 @@ import java.time.Instant;
 import java.util.*;
 
 /**
- * Service for getting locations with various constraints
+ * Service for getting orders with various constraints
  *
  * @author Steven Ceglarek
  */
@@ -34,37 +34,31 @@ import java.util.*;
 public class OrderService {
 
     private final OrderRepository ORDER_REPO;
-    private final OrderDetailsRepository ORDER_DETAILS_REPO;
-    private final StatusHistoryRepository STATUS_HISTORY_REPO;
     private final InventoryRepository INVENTORY_REPO;
     private final CustomerRepository CUSTOMER_REPO;
-
-
 
     /**
      * Constructor with order repository injected with spring
      * @param orderRepository The order repository to be used throughout
+     * @param inventoryRepository The inventory repository to be used in creating a new order
+     * @param customerRepository The customer repository to be used in creating a new order
      */
     @Autowired
     public OrderService(OrderRepository orderRepository,
-                        OrderDetailsRepository orderDetailsRepository,
-                        StatusHistoryRepository statusHistoryRepository,
                         InventoryRepository inventoryRepository,
                         CustomerRepository customerRepository){
         this.ORDER_REPO = orderRepository;
-        this.ORDER_DETAILS_REPO = orderDetailsRepository;
-        this.STATUS_HISTORY_REPO = statusHistoryRepository;
         this.INVENTORY_REPO = inventoryRepository;
         this.CUSTOMER_REPO = customerRepository;
     }
 
     /**
-     * Gets all locations using {@link OrderRepository}
+     * Gets all orders using {@link OrderRepository}
      * @param page The page to be selected defaults to 0 if page could not be understood
      * @param offset The number of elements per page [5|10|25|50|100] defaults to 25 if offset could not be understood
-     * @param sortBy The property/field to sort by ["quantity"|"name"|"description"|"price"|"discount"|"itemId"] defaults to itemId if sortby could not be understood
+     * @param sortBy The property/field to sort by ["firstName"|"lastName"|"email"|"phoneNumber"|"city"|"state"|"zip"] defaults to orderId if sortby could not be understood
      * @param order The order in which the list is displayed ["ASC"|"DESC"]
-     * @return The page of data transfer representations of all locations with pagination and sorting applied
+     * @return The page of data transfer representations of all orders with pagination and sorting applied
      */
     public Page<OrderDTO> getAllOrders(int page, int offset, String sortBy, String order){
         page = validatePage(page);
@@ -82,8 +76,8 @@ public class OrderService {
 
     /**
      * Gets order by order id
-     * @param id The id of the location being requested
-     * @return data transfer representation of location
+     * @param id The id of the order being requested
+     * @return data transfer representation of order
      */
     public OrderDTO getOrderById(int id){
         Optional<Order> order = ORDER_REPO.findById(id);
@@ -91,12 +85,13 @@ public class OrderService {
     }
 
     /**
-     * Gets all locations using {@link OrderRepository}
+     * Gets all orders using {@link OrderRepository}
+     * @param id the id of the customer who's orders are being looked up
      * @param page The page to be selected defaults to 0 if page could not be understood
      * @param offset The number of elements per page [5|10|25|50|100] defaults to 25 if offset could not be understood
-     * @param sortBy The property/field to sort by ["quantity"|"name"|"description"|"price"|"discount"|"itemId"] defaults to itemId if sortby could not be understood
+     * @param sortBy The property/field to sort by ["city"|"state"|"zip"] defaults to orderId if sortby could not be understood
      * @param order The order in which the list is displayed ["ASC"|"DESC"]
-     * @return The page of data transfer representations of all locations with pagination and sorting applied
+     * @return The page of data transfer representations of all orders that match the given customer id with pagination and sorting applied
      */
     public Page<OrderDTO> getOrdersByCustomerId(int id, int page, int offset, String sortBy, String order){
         page = validatePage(page);
@@ -113,12 +108,13 @@ public class OrderService {
     }
 
     /**
-     * Gets all locations using {@link OrderRepository}
+     * Gets all orders using {@link OrderRepository}
+     * @param id the id of the location where the orders are being looked up
      * @param page The page to be selected defaults to 0 if page could not be understood
      * @param offset The number of elements per page [5|10|25|50|100] defaults to 25 if offset could not be understood
-     * @param sortBy The property/field to sort by ["quantity"|"name"|"description"|"price"|"discount"|"itemId"] defaults to itemId if sortby could not be understood
+     * @param sortBy The property/field to sort by ["firstName"|"lastName"|"email"|"phoneNumber"] defaults to orderId if sortby could not be understood
      * @param order The order in which the list is displayed ["ASC"|"DESC"]
-     * @return The page of data transfer representations of all locations with pagination and sorting applied
+     * @return The page of data transfer representations of all orders that match given location id with pagination and sorting applied
      */
     public Page<OrderDTO> getOrdersByLocationId(int id, int page, int offset, String sortBy, String order){
         page = validatePage(page);
@@ -135,9 +131,9 @@ public class OrderService {
     }
 
     /**
-     * Persists an inventory object by calling {@link OrderRepository#save(Object)} and returns the newly saved inventory object as its data transfer representation
-     * @param order The Inventory object being persisted
-     * @return The newly persisted inventory object converted to its data transfer representation using {@link OrderDTO#OrderToDTO()}
+     * Persists an order object by calling {@link OrderRepository#save(Object)} and returns the newly saved order object as its data transfer representation
+     * @param orderCreateDTO The order object being persisted
+     * @return The newly persisted order object converted to its data transfer representation using {@link OrderDTO#OrderToDTO()}
      */
     public OrderDTO createNewOrder(OrderCreateDTO orderCreateDTO){
         Set<OrderDetails> orderDetailsSet = detailsConversion(orderCreateDTO.getOrderDetailsDTOSet());
@@ -175,7 +171,8 @@ public class OrderService {
 
     /**
      * Updates order status
-     * @param statusHistoryDTO order status being updated
+     * @param orderStatus status which is being added to order status
+     * @param orderId id of the order whos status is being updated
      * @return Data transfer representation of updated object
      */
     public OrderDTO updateOrderStatus(OrderStatus orderStatus, int orderId){
@@ -189,7 +186,11 @@ public class OrderService {
         return OrderDTO.OrderToDTO().apply(ORDER_REPO.save(order));
     }
 
-
+    /**
+     * Converts an OrderDetailsDTO Set to an OrderDetails Set for creating a new Order Object
+     * @param orderDetailsDTOSet the order details DTO set in which is being converted
+     * @return the newly converted order details set
+     */
     public Set<OrderDetails> detailsConversion(Set<OrderDetailsDTO> orderDetailsDTOSet) {
         Set<OrderDetails> orderDetailsSet = new HashSet<>();
         for (OrderDetailsDTO o : orderDetailsDTOSet) {
@@ -250,7 +251,7 @@ public class OrderService {
             case "zip":
                 return "location.zip";
             default:
-                return "datOfOrder";
+                return "orderId";
         }
     }
 

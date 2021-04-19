@@ -23,9 +23,9 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * Location data transfer object for {@link Location}
+ * Order data transfer object for {@link Order}
  *
- * @author Daniel Bernier
+ * @author Steven Ceglarek
  */
 @Data
 @NoArgsConstructor
@@ -41,8 +41,8 @@ public class OrderDTO {
     private Set<OrderDetails> orderDetails;
 
     /**
-     * Converts a Location to a data transfer object
-     * @return Data transfer object representing a location
+     * Converts an Order to a data transfer object
+     * @return Data transfer object representing an order
      */
     public static Function<Order, OrderDTO> OrderToDTO() {
         return (order) -> {
@@ -57,8 +57,8 @@ public class OrderDTO {
     }
 
         /**
-         * Converts a data transfer object to a Location
-         * @return Location from a data transfer object
+         * Converts a data transfer object to an Order
+         * @return Order from a data transfer object
          */
         public static Function<OrderDTO, Order> DTOToOrder () {
             return (orderDTO) -> {

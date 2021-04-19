@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,6 +44,7 @@ public class EmployeeIntegrationTest {
 
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void whenDefaultMapping_thenDirectoryDisplayed() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee")
@@ -65,11 +68,11 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetAll_thenEmployeeRetrieved() throws Exception {
         Employee temp = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
 
         employeeRepository.save(temp);
-
         mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employee/all").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -87,6 +90,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination() throws Exception {
         Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
         Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
@@ -130,6 +134,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination1() throws Exception {
         Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
         Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
@@ -173,6 +178,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination2() throws Exception {
         Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
         Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
@@ -216,6 +222,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination3() throws Exception {
         Employee emp1 = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
         Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
@@ -259,6 +266,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetAll_thenEmployeeRetrievedWithPagination4() throws Exception {
 //        Location location = new Location(0,"3324 Berton","Scranton", State.PA,"18505");
 //        Location location2 = new Location(0,"3296 Kiplin","Utica", State.PA,"18505");
@@ -307,6 +315,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetById_thenEmployeeRetrieved() throws Exception {
         Employee temp = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
         employeeRepository.save(temp);
@@ -330,6 +339,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetByEmail_thenEmployeeRetrieved() throws Exception {
         Employee temp = new Employee(0,"Ryan","Howard", Rank.LANDLUBBER, "Bobcat", "5704289173", null, "ryhoward@dunder.com");
         employeeRepository.save(temp);
@@ -353,6 +363,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenEmployee_whenGetByRank_thenEmployeeRetrieved() throws Exception {
         Employee emp1 = new Employee(0,"Michael","Scott", Rank.CREW, "password", "5704289173", null, "mkscott@dunder.com");
         Employee emp2 = new Employee(0,"Dwight","Schrute", Rank.CREW, "beets", "5704577896", null, "dwschrute@dunder.com");
@@ -396,6 +407,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void createEmployee_thenEmployeeRetrieved() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/employee/create")
@@ -419,6 +431,7 @@ public class EmployeeIntegrationTest {
 
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void updateEmployee_thenEmployeeRetrieved() throws Exception {
         employeeRepository.save(new Employee(0,"Bryan","Howard", Rank.LANDLUBBER, "Bobcat", "5704289173", null, "ryhoward@dunder.com"));
 

@@ -5,6 +5,8 @@ import com.sk8.swashbucklers.dto.CustomerDTO;
 import com.sk8.swashbucklers.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/customer")
+@Secured({"ROLE_CAPTAIN","ROLE_CREW"})
 public class CustomerController {
     private final CustomerService CUSTOMER_SERVICE;
 
@@ -31,6 +34,7 @@ public class CustomerController {
     @DeleteMapping
     @RequestMapping
     @PatchMapping
+    @Secured({"ROLE_CAPTAIN","ROLE_CREW"})
     public String information(){
         return "<h3>\n" +
                 "  Supported Endpoints for /customer:\n" +

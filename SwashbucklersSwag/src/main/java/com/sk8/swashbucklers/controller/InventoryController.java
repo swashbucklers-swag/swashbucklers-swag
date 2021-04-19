@@ -8,6 +8,7 @@ import com.sk8.swashbucklers.model.item.Inventory;
 import com.sk8.swashbucklers.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,6 +37,7 @@ public class InventoryController {
     @DeleteMapping
     @RequestMapping
     @PatchMapping
+    @Secured({"ROLE_CAPTAIN","ROLE_CREW"})
     public String information(){
         return "<h3>\n" +
                 "  Supported Endpoints for /inventory:\n" +
@@ -63,6 +65,7 @@ public class InventoryController {
      * @return The page of data transfer representations of all inventory objects with pagination and sorting applied
      */
     @GetMapping("/all")
+    @Secured({"ROLE_CAPTAIN","ROLE_CREW"})
     public Page<InventoryDTO> getAllInventory(
             @RequestParam(value="page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "offset", required = false, defaultValue = "25") int offset,
@@ -79,6 +82,7 @@ public class InventoryController {
      * @return The data transfer representation of the requested Inventory
      */
     @GetMapping("/item-id/{id}")
+    @Secured({"ROLE_CAPTAIN","ROLE_CREW"})
     public InventoryDTO getInventoryByItemId(@PathVariable(name = "id") int id){
         return INVENTORY_SERVICE.getInventoryByItemId(id);
     }
@@ -94,6 +98,7 @@ public class InventoryController {
      * @return The page of data transfer representations of all inventory objects who's names contain the given text with pagination and sorting applied
      */
     @GetMapping("/name")
+    @Secured({"ROLE_CAPTAIN","ROLE_CREW"})
     public Page<InventoryDTO> getAllInventoryWithNameLike(
             @RequestParam(value = "text") String text,
             @RequestParam(value="page", required = false, defaultValue = "0") int page,
@@ -115,6 +120,7 @@ public class InventoryController {
      * @return The page of data transfer representations of all inventory objects who's descriptions contain the given text with pagination and sorting applied
      */
     @GetMapping("/description")
+    @Secured({"ROLE_CAPTAIN","ROLE_CREW"})
     public Page<InventoryDTO> getAllInventoryWithDescriptionLike(
             @RequestParam(value = "text") String text,
             @RequestParam(value="page", required = false, defaultValue = "0") int page,
@@ -132,6 +138,7 @@ public class InventoryController {
      * @return The data transfer representation of the newly added inventory object
      */
     @PostMapping("/add")
+    @Secured("ROLE_CAPTAIN")
     public InventoryDTO addNewInventory(@RequestBody InventoryDTO inventoryDTO){
         inventoryDTO.setItemId(0);
         Inventory i = InventoryDTO.DTOToInventory().apply(inventoryDTO);
@@ -144,6 +151,7 @@ public class InventoryController {
      * @return String informing user of correct update uri conventions
      */
     @PutMapping("/update")
+    @Secured("ROLE_CAPTAIN")
     public String update(){
         return "Could not handle request, please use [/info | /quantity | /discount] to edit specific inventory attributes" +
                 "\n\nExample:" +
@@ -159,6 +167,7 @@ public class InventoryController {
      * @return The data transfer representation of the newly updated inventory
      */
     @PutMapping("/update/info")
+    @Secured("ROLE_CAPTAIN")
     public InventoryDTO updateInventoryInfo(@RequestBody ItemInfoDTO itemInfoDTO){
         return INVENTORY_SERVICE.updateInventoryItemInfo(itemInfoDTO);
     }
@@ -170,6 +179,7 @@ public class InventoryController {
      * @return The data transfer representation of the newly updated inventory
      */
     @PutMapping("/update/quantity")
+    @Secured("ROLE_CAPTAIN")
     public InventoryDTO updateInventoryInfo(@RequestBody InventoryQuantityDTO inventoryQuantityDTO){
         return INVENTORY_SERVICE.updateInventoryQuantity(inventoryQuantityDTO);
     }
@@ -181,6 +191,7 @@ public class InventoryController {
      * @return The data transfer representation of the newly updated inventory
      */
     @PutMapping("/update/discount")
+    @Secured("ROLE_CAPTAIN")
     public InventoryDTO updateInventoryInfo(@RequestBody ItemDiscountDTO itemDiscountDTO){
         return INVENTORY_SERVICE.updateItemDiscount(itemDiscountDTO);
     }
@@ -192,6 +203,7 @@ public class InventoryController {
      * @return String confirming deletion
      */
     @DeleteMapping("/delete/{id}")
+    @Secured("ROLE_CAPTAIN")
     public String deleteInventoryByItemId(@PathVariable(name = "id") int itemId){
         INVENTORY_SERVICE.deleteInventoryByItemId(itemId);
         return "Deleted inventory item with id: " + itemId;

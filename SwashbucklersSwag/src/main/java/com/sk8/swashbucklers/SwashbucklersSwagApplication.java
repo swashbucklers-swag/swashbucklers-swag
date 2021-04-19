@@ -1,5 +1,6 @@
 package com.sk8.swashbucklers;
 
+import com.sk8.swashbucklers.repo.employee.EmployeeRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

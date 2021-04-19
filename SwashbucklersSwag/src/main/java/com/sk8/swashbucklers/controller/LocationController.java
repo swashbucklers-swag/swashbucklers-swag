@@ -4,6 +4,7 @@ import com.sk8.swashbucklers.dto.LocationDTO;
 import com.sk8.swashbucklers.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/location")
+@Secured({"ROLE_CAPTAIN","ROLE_CREW"})
 public class LocationController {
 
     private final LocationService LOCATION_SERVICE;

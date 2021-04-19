@@ -5,11 +5,13 @@ import com.sk8.swashbucklers.model.customer.Customer;
 import com.sk8.swashbucklers.model.location.Location;
 import com.sk8.swashbucklers.model.location.State;
 import com.sk8.swashbucklers.repo.customer.CustomerRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,6 +40,31 @@ public class CustomerIntegrationTest {
     private CustomerController customerController;
 
     @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
+    void whenDefaultMapping_thenDirectoryDisplayed() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customer")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
+                .andReturn();
+        Assertions.assertEquals("<h3>\n" +
+                "  Supported Endpoints for /customer:\n" +
+                "</h3>\n" +
+                "<ul>\n" +
+                "  <li>/all :: GET</li>\n" +
+                "  <li>/id :: GET</li>\n" +
+                "  <li>/email :: GET</li>\n" +
+                "  <li>/location :: GET</li>\n" +
+                "  <li>/phonenumber :: GET</li>\n" +
+                "  <li>/create :: POST</li>\n" +
+                "  <li>/update :: PUT</li>\n" +
+                "</ul>", result.getResponse().getContentAsString());
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
     public void givenCustomer_whenGetAll_thenCustomerRetrieved() throws Exception {
         customerRepository.save(new Customer(0, "Bob", "Smith", "bob@mail.com", "Pass", "5551234567", new Location(0, "123 Fake St", "Springfield", State.NY, "01234")));
         mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
@@ -61,6 +88,7 @@ public class CustomerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
     public void givenCustomer_whenGetById_thenCustomerRetrieved() throws Exception {
         customerRepository.save(new Customer(0, "Bob", "Smith", "bob@mail.com", "Pass", "5551234567", new Location(0, "123 Fake St", "Springfield", State.NY, "01234")));
         mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
@@ -82,6 +110,7 @@ public class CustomerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
     public void givenCustomer_whenGetByEmail_thenCustomerRetrieved() throws Exception {
         customerRepository.save(new Customer(0, "Bob", "Smith", "bob@mail.com", "Pass", "5551234567", new Location(0, "123 Fake St", "Springfield", State.NY, "01234")));
         mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
@@ -104,6 +133,7 @@ public class CustomerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
     public void givenCustomer_whenGetByPhone_thenCustomerRetrieved() throws Exception {
         customerRepository.save(new Customer(0, "Bob", "Smith", "bob@mail.com", "Pass", "5551234567", new Location(0, "123 Fake St", "Springfield", State.NY, "01234")));
         mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
@@ -125,6 +155,7 @@ public class CustomerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
     void createCustomer_thenCustomerRetrieved() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/customer/create")
@@ -145,6 +176,7 @@ public class CustomerIntegrationTest {
         System.out.println(result.getResponse().getContentAsString());
     }
     @Test
+    @WithMockUser(username = "firstmate",password = "firstmatePass",roles = {"CREW"})
     void updateCustomer_thenCustomerRetrieved() throws Exception {
         customerRepository.save(new Customer(0, "Bob", "Smith", "bob@mail.com", "Pass", "5551234567", new Location(0, "123 Fake St", "Springfield", State.NY, "01234")));
         mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();

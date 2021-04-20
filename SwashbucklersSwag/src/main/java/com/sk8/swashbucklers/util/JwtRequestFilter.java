@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Jason Web Token request filter
- */
-
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -56,6 +52,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
+        System.out.println(request);
         chain.doFilter(request, response);
     }
 

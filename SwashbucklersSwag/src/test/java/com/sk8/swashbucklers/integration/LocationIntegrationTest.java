@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +38,7 @@ class LocationIntegrationTest {
     private LocationController locationController;
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void whenDefaultMapping_thenDirectoryDisplayed() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/location")
@@ -59,6 +61,7 @@ class LocationIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenLocation_whenGetAll_thenLocationRetrieved() throws Exception{
         locationRepository.save(new Location(0, "123 address St", "Paris", State.NY, "55125"));
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
@@ -77,6 +80,7 @@ class LocationIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenLocation_whenGetAllWithPagination_thenLocationRetrievedWithPagination() throws Exception{
         locationRepository.save(new Location(0, "123 address St", "Paris", State.NY, "55125"));
 
@@ -103,6 +107,7 @@ class LocationIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenLocation_whenGetLocationId_thenLocationRetrieved() throws Exception{
         locationRepository.save(new Location(0, "123 address St", "Paris", State.NY, "55125"));
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
@@ -120,6 +125,7 @@ class LocationIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenLocation_whenGetByState_thenLocationRetrieved() throws Exception{
         locationRepository.save(new Location(0, "123 address St", "Paris", State.NY, "55125"));
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
@@ -138,6 +144,7 @@ class LocationIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenLocation_whenGetByZip_thenLocationRetrieved() throws Exception{
         locationRepository.save(new Location(0, "123 address St", "Paris", State.NY, "55125"));
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();
@@ -156,6 +163,7 @@ class LocationIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenLocation_whenGetByCity_thenLocationRetrieved() throws Exception{
         locationRepository.save(new Location(0, "123 address St", "Paris", State.NY, "55125"));
         mockMvc = MockMvcBuilders.standaloneSetup(locationController).build();

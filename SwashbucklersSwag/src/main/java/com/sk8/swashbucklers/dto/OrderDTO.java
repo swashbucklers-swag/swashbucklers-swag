@@ -1,9 +1,7 @@
 package com.sk8.swashbucklers.dto;
 
 import com.sk8.swashbucklers.model.customer.Customer;
-import com.sk8.swashbucklers.model.item.Item;
 import com.sk8.swashbucklers.model.location.Location;
-import com.sk8.swashbucklers.model.location.State;
 import com.sk8.swashbucklers.model.order.Order;
 import com.sk8.swashbucklers.model.order.OrderDetails;
 import com.sk8.swashbucklers.model.order.StatusHistory;
@@ -11,13 +9,8 @@ import io.jsonwebtoken.lang.Assert;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;

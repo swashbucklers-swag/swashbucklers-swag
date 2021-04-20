@@ -4,11 +4,13 @@ import com.sk8.swashbucklers.model.location.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Set;
 
+/**
+ * @author Steven Ceglarek
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

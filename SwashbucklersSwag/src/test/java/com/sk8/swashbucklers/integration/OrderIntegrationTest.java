@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,7 +29,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -66,6 +66,7 @@ public class OrderIntegrationTest {
     private OrderController orderController;
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void whenDefaultMapping_thenDirectoryDisplayed() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/order")
@@ -89,6 +90,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenOrder_whenGetAll_thenOrderRetrieved() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -144,6 +146,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenOrder_whenGetAllWithPagination_thenOrderRetrievedWithPagination() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -248,6 +251,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenOrder_whenGetByOrderId_thenOrderRetrieved() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -303,6 +307,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenOrder_whenGetByCustomerId_thenOrderRetrieved() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -359,6 +364,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenOrder_whenGetByLocationId_thenOrderRetrieved() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -415,6 +421,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void createOrder_thenOrderRetrieved() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -462,6 +469,7 @@ public class OrderIntegrationTest {
 
     @Test
     @Transactional
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void updateOrderStatus_thenOrderRetrieved() throws Exception{
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);

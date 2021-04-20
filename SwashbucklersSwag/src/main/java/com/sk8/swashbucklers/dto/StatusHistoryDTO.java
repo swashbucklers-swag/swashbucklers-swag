@@ -1,13 +1,11 @@
 package com.sk8.swashbucklers.dto;
 
-import com.sk8.swashbucklers.model.order.Order;
 import com.sk8.swashbucklers.model.order.OrderStatus;
 import com.sk8.swashbucklers.model.order.StatusHistory;
 import io.jsonwebtoken.lang.Assert;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.PositiveOrZero;
 import java.sql.Timestamp;
 import java.util.function.Function;

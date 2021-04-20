@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,7 +21,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
@@ -45,6 +45,7 @@ class TimesheetIntegrationTest {
     private PasswordHashingUtil passwordHashingUtil;
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void whenDefaultMapping_thenDirectoryDisplayed() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(timesheetController).build();
 
@@ -69,6 +70,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenGetAllTimesheet_thenTimesheetRetrieved() throws Exception{
         String pass = "";
         try {
@@ -103,6 +105,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenGetAllTimesheetWithPagination_thenTimesheetRetrievedWithPagination() throws Exception{
         String pass = "";
         try {
@@ -157,6 +160,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenGetTimesheetById_thenTimesheetRetrieved() throws Exception{
         String pass = "";
         try {
@@ -191,6 +195,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenGetTimesheetByEmployeeId_thenTimesheetRetrieved() throws Exception{
         String pass = "";
         try {
@@ -223,6 +228,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenClockIn_thenTimesheetRetrieved() throws Exception{
         String pass = "";
         try {
@@ -251,6 +257,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenClockOut_thenTimesheetRetrieved() throws Exception{
         String pass = "";
         try {
@@ -282,6 +289,7 @@ class TimesheetIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenTimesheet_whenUpdateTimesheet_thenTimesheetRetrieved() throws Exception{
         String pass = "";
         try {

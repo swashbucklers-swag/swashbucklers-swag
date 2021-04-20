@@ -142,7 +142,7 @@ class InventoryIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.itemId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.itemId").value(2))//2??? shouldnt it be 0??
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Boat"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Cool red boat"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(255.99))

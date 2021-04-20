@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,6 +40,7 @@ class InventoryIntegrationTest {
     private InventoryController inventoryController;
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void whenDefaultMapping_thenDirectoryDisplayed() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/inventory")
@@ -64,6 +66,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenInventory_whenGetAll_thenInventoryRetrieved() throws Exception{
         Item item = new Item(0, "Boat", "Cool red boat", 255.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -87,6 +90,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenInventory_whenGetAllWithPagination_thenInventoryRetrievedWithPagination() throws Exception{
         Item item1 = new Item(0, "Boat1", "Cool red boat1", 255.99, 25);
         Item item2 = new Item(0, "Boat2", "Cool red boat2", 255.99, 25);
@@ -130,6 +134,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenInventory_whenGetByItemId_thenInventoryRetrieved() throws Exception{
         Item item = new Item(0, "Boat", "Cool red boat", 255.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -142,7 +147,7 @@ class InventoryIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.itemId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.itemId").value(2))//2??? shouldnt it be 0??
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Boat"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Cool red boat"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(255.99))
@@ -153,6 +158,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenInventory_whenGetByNameLike_thenInventoryRetrieved() throws Exception{
         Item item = new Item(0, "Boat", "Cool red boat", 255.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -176,6 +182,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void givenInventory_whenGetByDescriptionLike_thenInventoryRetrieved() throws Exception{
         Item item = new Item(0, "Boat", "Cool red boat", 255.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -199,6 +206,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void addInventory_thenInventoryRetrieved() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/inventory/add")
@@ -218,6 +226,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void addInventory_whenGetAll_thenInventoryRetrieved() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/inventory/add")
@@ -251,6 +260,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void addInventory_whenGetAll_thenInventoryRetrieved_whenUpdateInfo_thenUpdatedInventoryRetrieved() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/inventory/add")
@@ -313,6 +323,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void addInventory_whenGetAll_thenInventoryRetrieved_whenUpdateQuantity_thenUpdatedInventoryRetrieved() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/inventory/add")
@@ -375,6 +386,7 @@ class InventoryIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void addInventory_whenGetAll_thenInventoryRetrieved_whenUpdateDiscount_thenUpdatedInventoryRetrieved() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/inventory/add")
@@ -438,6 +450,7 @@ class InventoryIntegrationTest {
 
     @Transactional
     @Test
+    @WithMockUser(username = "admin",password = "adminPass",roles = {"CAPTAIN"})
     void addInventory_whenGetAll_thenInventoryRetrieved_whenDeleteInventory_thenNoInventoryRetrieved() throws Exception{
         mockMvc = MockMvcBuilders.standaloneSetup(inventoryController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/inventory/add")

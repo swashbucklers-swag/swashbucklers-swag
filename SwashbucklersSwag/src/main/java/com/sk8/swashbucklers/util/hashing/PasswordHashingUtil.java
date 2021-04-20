@@ -1,7 +1,8 @@
 package com.sk8.swashbucklers.util.hashing;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -12,8 +13,11 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class PasswordHashingUtil implements Hashable {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     /**
-     * Takes the users email and password and returns a hash
+     * Takes the users email and password and returns a hash, this method is basically deprecated
      * @param email The user's email
      * @param password The user's password
      * @return The hash of email with password and some salt
@@ -21,18 +25,6 @@ public class PasswordHashingUtil implements Hashable {
      */
     @Override
     public String hashPasswordWithEmail(String email, String password) throws NoSuchAlgorithmException {
-        String full = email + password + "salt";
-
-        MessageDigest m = MessageDigest.getInstance("md5");
-        byte[] messageDigest = m.digest(full.getBytes());
-        BigInteger n = new BigInteger(1, messageDigest);
-
-        //Convert the whole array into a hexadecimal string.
-        String hash = n.toString(16);
-        while (hash.length() < 32) {
-            hash = "0" + hash;
-        }
-
-        return hash;
+        return passwordEncoder.encode(password);
     }
 }

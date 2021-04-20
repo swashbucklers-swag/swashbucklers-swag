@@ -45,8 +45,7 @@ public class EmployeeDTO {
             return new EmployeeDTO(employee.getEmployeeId(),
                     employee.getFirstName(),
                     employee.getLastName(),
-                    employee.getEmail(),
-                    "",
+                    employee.getEmail(), employee.getPassword(),
                     employee.getPhoneNumber(),
                     employee.getLocation(), employee.getRank());
         };

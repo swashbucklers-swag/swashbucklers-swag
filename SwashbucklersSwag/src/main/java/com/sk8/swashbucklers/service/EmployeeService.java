@@ -4,12 +4,12 @@ import com.sk8.swashbucklers.dto.EmployeeDTO;
 import com.sk8.swashbucklers.model.employee.Employee;
 import com.sk8.swashbucklers.model.employee.Rank;
 import com.sk8.swashbucklers.repo.employee.EmployeeRepository;
-import com.sk8.swashbucklers.util.hashing.PasswordHashingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,14 +24,15 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
+    private final PasswordEncoder PASSWORD_ENCODER;
+
     private final EmployeeRepository EMPLOYEE_REPO;
 
-    private final PasswordHashingUtil PASSWORD_HASHING_UTIL;
-
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, PasswordHashingUtil passwordHashingUtil){
+    public EmployeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder){
         this.EMPLOYEE_REPO = employeeRepository;
-        this.PASSWORD_HASHING_UTIL = passwordHashingUtil;
+        this.PASSWORD_ENCODER = passwordEncoder;
+
     }
 
     /**
@@ -116,11 +117,7 @@ public class EmployeeService {
      * @return EmployeeDTO converted from Employee upon successful persistence
      */
     public EmployeeDTO createEmployee(Employee employee){
-        try {
-            employee.setPassword(PASSWORD_HASHING_UTIL.hashPasswordWithEmail(employee.getEmail(), employee.getPassword()));
-        } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"email and/or password credentials are not valid");
-        }
+        employee.setPassword(PASSWORD_ENCODER.encode(employee.getPassword()));
         Employee saved = EMPLOYEE_REPO.save(employee);
         return EmployeeDTO.employeeToDTO().apply(saved);
     }
@@ -143,11 +140,8 @@ public class EmployeeService {
         employee.setLastName(employeeDTO.getLastName());
         employee.setEmail(employeeDTO.getEmail());
         employee.setRank(employeeDTO.getRank());
-        try {
-            employee.setPassword(PASSWORD_HASHING_UTIL.hashPasswordWithEmail(employeeDTO.getEmail(),employeeDTO.getPassword()));
-        } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"email and/or password credentials are not valid");
-        }
+
+        employee.setPassword(PASSWORD_ENCODER.encode(employee.getPassword()));
         employee.setPhoneNumber(employeeDTO.getPhoneNumber());
         employee.setLocation(employeeDTO.getLocation());
 

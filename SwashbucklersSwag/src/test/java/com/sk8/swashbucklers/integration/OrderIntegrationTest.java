@@ -427,7 +427,8 @@ public class OrderIntegrationTest {
         mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/order/create")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"customerId\" : \"3\", \"location\" : {\"locationId\" : \"0\", \"address\" : \"954 Broward Blvd\", \"city\" : \"Hollywood\", \"state\" : \"FL\", \"zip\" : \"33026\"}, \"orderDetailsDTOSet\" : [{\"itemId\" : \"2\", \"quantity\" : \"10\"}]}"))
+                .content("{\"customerId\" : \"3\", \"location\" : {\"locationId\" : \"0\", \"address\" : \"954 Broward Blvd\", \"city\" : \"Hollywood\", " +
+                        "\"state\" : \"FL\", \"zip\" : \"33026\"}, \"orderDetailsDTOSet\" : [{\"itemId\" : \"2\", \"quantity\" : \"10\"}]}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())

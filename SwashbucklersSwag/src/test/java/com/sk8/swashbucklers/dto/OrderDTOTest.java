@@ -1,4 +1,4 @@
-package com.sk8.swashbucklers.DTO;
+package com.sk8.swashbucklers.dto;
 
 import com.sk8.swashbucklers.dto.InventoryDTO;
 import com.sk8.swashbucklers.dto.OrderDTO;

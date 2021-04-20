@@ -13,7 +13,7 @@ import javax.validation.constraints.Positive;
 public class OrderDetailsDTO {
 
     @Positive
-    private int itemID;
+    private int itemId;
     @Positive
     private int quantity;
 }

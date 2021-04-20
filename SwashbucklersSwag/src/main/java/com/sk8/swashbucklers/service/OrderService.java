@@ -136,6 +136,8 @@ public class OrderService {
      * @return The newly persisted order object converted to its data transfer representation using {@link OrderDTO#OrderToDTO()}
      */
     public OrderDTO createNewOrder(OrderCreateDTO orderCreateDTO){
+        System.out.println(orderCreateDTO.toString());
+        System.out.println(orderCreateDTO.getOrderDetailsDTOSet());
         Set<OrderDetails> orderDetailsSet = detailsConversion(orderCreateDTO.getOrderDetailsDTOSet());
         for (OrderDetails orderDetails : orderDetailsSet) {
             Optional<Inventory> optionalInventory = INVENTORY_REPO.findByItem_ItemId(orderDetails.getItem().getItemId());
@@ -194,7 +196,7 @@ public class OrderService {
     public Set<OrderDetails> detailsConversion(Set<OrderDetailsDTO> orderDetailsDTOSet) {
         Set<OrderDetails> orderDetailsSet = new HashSet<>();
         for (OrderDetailsDTO o : orderDetailsDTOSet) {
-            Optional<Inventory> optionalInventory = INVENTORY_REPO.findByItem_ItemId(o.getItemID());
+            Optional<Inventory> optionalInventory = INVENTORY_REPO.findByItem_ItemId(o.getItemId());
             if (!optionalInventory.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not find a valid item id with the order given");
             }

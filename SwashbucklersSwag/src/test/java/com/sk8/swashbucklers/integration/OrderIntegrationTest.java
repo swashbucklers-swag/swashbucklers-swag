@@ -101,7 +101,7 @@ public class OrderIntegrationTest {
         Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
         customerRepository.save(c);
-        Location l2 = new Location(0, "954 Broward blvd", "Hollywood", State.FL, "33026");
+        Location l2 = new Location(0, "954 Broward Blvd", "Hollywood", State.FL, "33026");
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
         Order newOrder = new Order(0, c, l2, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
@@ -126,7 +126,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.locationId").value(6))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.city").value("Hollywood"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.zip").value("33026"))
@@ -156,7 +156,7 @@ public class OrderIntegrationTest {
         Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
         customerRepository.save(c);
-        Location l2 = new Location(0, "954 Broward blvd", "Hollywood", State.FL, "33026");
+        Location l2 = new Location(0, "954 Broward Blvd", "Hollywood", State.FL, "33026");
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
         Order newOrder = new Order(0, c, l2, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
@@ -173,7 +173,7 @@ public class OrderIntegrationTest {
         Location l3 = new Location(0, "123 Fake St", "New York", State.NY, "33426");
         Customer c2 = new Customer(0, "Dwayne", "Wade", "dw@mail.com", "pass123", "3051234567", l3);
         customerRepository.save(c2);
-        Location l4 = new Location(0, "954 Broward blvd", "Boynton Beach", State.FL, "33026");
+        Location l4 = new Location(0, "954 Broward Blvd", "Boynton Beach", State.FL, "33026");
         Set<OrderDetails> orderDetailsSet2 = new HashSet<>(Collections.singletonList(new OrderDetails(0, item2, 5)));
         Order newOrder2 = new Order(0, c2, l4, Timestamp.from(Instant.now()), statusHistoryList2, orderDetailsSet2);
         for (OrderDetails orderDetails2 : orderDetailsSet2) {
@@ -199,7 +199,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.locationId").value(10))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.city").value("Hollywood"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].dateOfOrder").isNotEmpty())
@@ -222,7 +222,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].customer.location.state").value("NY"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].location.locationId").value(14))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].location.city").value("Boynton Beach"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[1].location.zip").value("33026"))
@@ -260,7 +260,7 @@ public class OrderIntegrationTest {
         Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
         customerRepository.save(c);
-        Location l2 = new Location(0, "954 Broward blvd", "Hollywood", State.FL, "33026");
+        Location l2 = new Location(0, "954 Broward Blvd", "Hollywood", State.FL, "33026");
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
         Order newOrder = new Order(0, c, l2, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
@@ -285,7 +285,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.locationId").value(6))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.city").value("Hollywood"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.zip").value("33026"))
@@ -315,7 +315,7 @@ public class OrderIntegrationTest {
         Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
         customerRepository.save(c);
-        Location l2 = new Location(0, "954 Broward blvd", "Hollywood", State.FL, "33026");
+        Location l2 = new Location(0, "954 Broward Blvd", "Hollywood", State.FL, "33026");
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
         Order newOrder = new Order(0, c, l2, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
@@ -341,7 +341,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.locationId").value(6))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.city").value("Hollywood"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.zip").value("33026"))
@@ -371,7 +371,7 @@ public class OrderIntegrationTest {
         Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
         customerRepository.save(c);
-        Location l2 = new Location(0, "954 Broward blvd", "Hollywood", State.FL, "33026");
+        Location l2 = new Location(0, "954 Broward Blvd", "Hollywood", State.FL, "33026");
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
         Order newOrder = new Order(0, c, l2, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
@@ -397,7 +397,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.locationId").value(6))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.city").value("Hollywood"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].location.zip").value("33026"))
@@ -416,9 +416,18 @@ public class OrderIntegrationTest {
     @Test
     @Transactional
     void createOrder_thenOrderRetrieved() throws Exception{
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
+        inventoryRepository.save(inventory);
+        Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
+        Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
+        customerRepository.save(c);
         mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/order/create")
-                .contentType(MediaType.APPLICATION_JSON))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/order/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"customerId\" : \"3\", \"location\" : {\"locationId\" : \"0\", \"address\" : \"954 Broward Blvd\", \"city\" : \"Hollywood\", \"state\" : \"FL\", \"zip\" : \"33026\"}, \"orderDetailsDTOSet\" : [{\"itemId\" : \"2\", \"quantity\" : \"10\"}]}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
@@ -434,7 +443,7 @@ public class OrderIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.zip").value("33426"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.locationId").value(6))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.location.address").value("954 Broward blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.address").value("954 Broward Blvd"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.city").value("Hollywood"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.state").value("FL"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location.zip").value("33026"))
@@ -450,9 +459,65 @@ public class OrderIntegrationTest {
         System.out.println(result.getResponse().getStatus());
     }
 
+    @Test
+    @Transactional
+    void updateOrderStatus_thenOrderRetrieved() throws Exception{
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
+        inventoryRepository.save(inventory);
+        StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
+        List<StatusHistory> statusHistoryList = new ArrayList<>();
+        statusHistoryList.add(statusHistory);
+        Location l1 = new Location(0, "123 Fake St", "Springfield", State.FL, "33426");
+        Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567", l1);
+        customerRepository.save(c);
+        Location l2 = new Location(0, "954 Broward Blvd", "Hollywood", State.FL, "33026");
+        Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
+        Order newOrder = new Order(0, c, l2, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            orderDetails.setOrder(newOrder);
+        }
+        orderRepository.save(newOrder);
+        mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/order/update-status/5")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"DELIVERED\""))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.orderId").value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.customerId").value(3))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.firstName").value("Lebron"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.lastName").value("James"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.email").value("lbj@mail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.phoneNumber").value("7861234567"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.locationId").value(4))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.address").value("123 Fake St"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.city").value("Springfield"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.state").value("FL"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customer.location.zip").value("33426"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.locationId").value(6))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.address").value("954 Broward Blvd"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.city").value("Hollywood"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.state").value("FL"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location.zip").value("33026"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dateOfOrder").isNotEmpty())
 
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusHistory[0].historyId").value(8))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusHistory[0].orderStatus").value("PROCESSING_ORDER"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusHistory[0].statusTime").isNotEmpty())
 
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusHistory[1].historyId").value(9))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusHistory[1].orderStatus").value("DELIVERED"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.statusHistory[1].statusTime").isNotEmpty())
 
-
-
+                .andExpect(MockMvcResultMatchers.jsonPath("$.orderDetails[0].orderDetailsId").value(7))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.orderDetails[0].item.itemId").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.orderDetails[0].quantity").value(10))
+                .andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        System.out.println(result.getResponse().getStatus());
+    }
 }

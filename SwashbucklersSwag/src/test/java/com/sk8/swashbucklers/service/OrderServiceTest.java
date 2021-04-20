@@ -114,7 +114,6 @@ public class OrderServiceTest {
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
         orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
         OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
@@ -148,14 +147,11 @@ public class OrderServiceTest {
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
-        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
         Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
             orderDetails.setOrder(newOrder);
@@ -189,14 +185,11 @@ public class OrderServiceTest {
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
-        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
         Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
             orderDetails.setOrder(newOrder);
@@ -237,14 +230,11 @@ public class OrderServiceTest {
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
-        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
         Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
             orderDetails.setOrder(newOrder);
@@ -273,5 +263,40 @@ public class OrderServiceTest {
         Assertions.assertEquals(statusHistoryList, response.getContent().get(0).getStatusHistory());
         Assertions.assertEquals(orderDetailsSet, response.getContent().get(0).getOrderDetails());
         System.out.println(response.getContent());
+    }
+
+    @Test
+    void whenUpdateOrderStatus_returnsNewlyUpdatedOrderDTO(){
+        Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
+        Inventory inventory = new Inventory(0, item, 13);
+        item.setInventory(inventory);
+        inventory.setItem(item);
+        StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
+        List<StatusHistory> statusHistoryList = new ArrayList<>();
+        statusHistoryList.add(statusHistory);
+        Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
+                new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
+        Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
+        Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
+        Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
+        for (OrderDetails orderDetails : orderDetailsSet) {
+            orderDetails.setOrder(newOrder);
+        }
+
+        Mockito.when(inventoryRepository.findByItem_ItemId(org.mockito.ArgumentMatchers.isA(Integer.class))).thenReturn(Optional.of(inventory));
+        Mockito.when(orderRepository.save(org.mockito.ArgumentMatchers.isA(Order.class))).thenReturn(newOrder);
+        Mockito.when(orderRepository.findById(org.mockito.ArgumentMatchers.isA(Integer.class))).thenReturn(Optional.of(newOrder));
+        Mockito.when(inventoryRepository.save(org.mockito.ArgumentMatchers.isA(Inventory.class))).thenReturn(inventory);
+        Mockito.when(customerRepository.findById(org.mockito.ArgumentMatchers.isA(Integer.class))).thenReturn(Optional.of(c));
+
+        OrderDTO response = orderService.updateOrderStatus(OrderStatus.DELIVERED, newOrder.getOrderId());
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(0, response.getOrderId());
+        Assertions.assertEquals(c, response.getCustomer());
+        Assertions.assertEquals(l, response.getLocation());
+        Assertions.assertNotNull(response.getDateOfOrder());
+        Assertions.assertEquals(statusHistoryList, response.getStatusHistory());
+        Assertions.assertEquals(orderDetailsSet, response.getOrderDetails());
+        System.out.println(response);
     }
 }

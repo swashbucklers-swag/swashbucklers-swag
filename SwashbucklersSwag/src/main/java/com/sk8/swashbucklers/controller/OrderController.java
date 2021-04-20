@@ -129,7 +129,7 @@ public class OrderController {
          * @return The data transfer representation of the newly updated order
          */
         @PutMapping("/update-status/{orderId}")
-        public OrderDTO updateOrderStatus(@PathVariable(name = "orderId") int orderID, OrderStatus orderStatus){
+        public OrderDTO updateOrderStatus(@PathVariable(name = "orderId") int orderID, @RequestBody OrderStatus orderStatus){
             return ORDER_SERVICE.updateOrderStatus(orderStatus, orderID);
         }
 

@@ -1,7 +1,7 @@
 package com.sk8.swashbucklers.util.hashing;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public class PasswordHashingUtil implements Hashable {
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Takes the users email and password and returns a hash, this method is basically deprecated
@@ -25,6 +25,6 @@ public class PasswordHashingUtil implements Hashable {
      */
     @Override
     public String hashPasswordWithEmail(String email, String password) throws NoSuchAlgorithmException {
-        return bCryptPasswordEncoder.encode(password);
+        return passwordEncoder.encode(password);
     }
 }

@@ -32,15 +32,15 @@ public class Order {
     private int orderId;
     @ManyToOne
     private Customer customer;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL)
     private Location location;
     @CreationTimestamp
     @Column(name = "date_of_order", nullable = false)
     private Timestamp dateOfOrder;
-    @OneToMany(mappedBy = "historyId")
+    @OneToMany(mappedBy = "historyId", cascade = CascadeType.ALL)
     @Column(name = "history_id", nullable = false)
     private List<StatusHistory> statusHistory;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<OrderDetails> orderDetails;

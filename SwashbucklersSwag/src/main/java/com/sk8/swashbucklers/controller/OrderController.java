@@ -70,7 +70,7 @@ public class OrderController {
          * @return The data transfer representation of the requested order
          */
         @GetMapping("/order-id/{id}")
-        public OrderDTO getOrderByOrderIId(@PathVariable(name = "id") int id){
+        public OrderDTO getOrderByOrderId(@PathVariable(name = "id") int id){
             return ORDER_SERVICE.getOrderById(id);
         }
 

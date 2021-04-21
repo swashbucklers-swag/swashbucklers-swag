@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for customer endpoints
  * @author John Stone
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/customer")
 @Secured({"ROLE_CAPTAIN","ROLE_CREW"})

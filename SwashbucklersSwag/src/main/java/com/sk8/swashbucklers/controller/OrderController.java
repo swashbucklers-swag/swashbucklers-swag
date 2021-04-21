@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for order resource utilizing {@link OrderService}
  * @author Steven Ceglarek
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/order")
 public class OrderController {

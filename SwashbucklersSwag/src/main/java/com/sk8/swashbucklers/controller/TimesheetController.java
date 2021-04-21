@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Edson Rodriguez
  */
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/employee/clock")
 public class TimesheetController {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for inventory resource utilizing {@link InventoryService}
  * @author Daniel Bernier
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {

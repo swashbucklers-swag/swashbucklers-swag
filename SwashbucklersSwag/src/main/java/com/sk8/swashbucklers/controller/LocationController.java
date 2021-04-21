@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for location resource utilizing {@link LocationService}
  * @author Daniel Bernier
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/location")
 @Secured({"ROLE_CAPTAIN","ROLE_CREW"})

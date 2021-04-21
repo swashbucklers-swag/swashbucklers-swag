@@ -20,7 +20,8 @@ public class Inventory {
     @GeneratedValue
     @Column(name = "inventory_id")
     private int inventoryId;
-    @OneToOne(mappedBy = "inventory")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
     private Item item;
     @PositiveOrZero
     @Column(nullable = false)

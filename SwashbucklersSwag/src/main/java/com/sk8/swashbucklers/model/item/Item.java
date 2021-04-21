@@ -1,10 +1,18 @@
 package com.sk8.swashbucklers.model.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ * Represents an item entry, holding various properties about an item
+ *
+ * @author Daniel Bernier
+ */
 @Entity
 @Table(name = "items")
 @Data
@@ -29,11 +37,13 @@ public class Item {
     @DecimalMax(value = "100", inclusive = false)
     @Column
     private int discount;
-    @OneToOne
-    @JoinColumn(name = "inventory_id")
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "item")
     private Inventory inventory;
 
-    public Item(int itemId, @Size(min = 1) String description, @Size(min = 1, max = 255) String name, @Positive @Digits(integer = 10, fraction = 2) double price, @PositiveOrZero @DecimalMax(value = "100", inclusive = false) int discount) {
+    public Item(int itemId, @Size(min = 1, max = 255) String name, @Size(min = 1) String description, @Positive @Digits(integer = 10, fraction = 2) double price, @PositiveOrZero @DecimalMax(value = "100", inclusive = false) int discount) {
         this.itemId = itemId;
         this.description = description;
         this.name = name;

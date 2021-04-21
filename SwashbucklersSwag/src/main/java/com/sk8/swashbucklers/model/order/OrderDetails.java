@@ -1,5 +1,6 @@
 package com.sk8.swashbucklers.model.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sk8.swashbucklers.model.item.Item;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class OrderDetails {
     private int orderDetailsId;
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnore
     private Order order;
     @ManyToOne
     private Item item;

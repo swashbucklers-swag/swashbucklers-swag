@@ -109,16 +109,15 @@ public class TimesheetService {
      * @return A data transfer object that represents the newly created timesheet object
      */
     public TimesheetDTO clockIn(LoginDTO loginDTO){
-        String pass;
-        try {
-            pass  = PASSWORD_HASHING.hashPasswordWithEmail(loginDTO.getEmail(), loginDTO.getPassword());
+        Optional<Employee> empOptional = EMPLOYEE_REPO.findByEmail(loginDTO.getEmail());
 
-        } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Could not process login credentials");
-        }
-        Optional<Employee> empOptional = EMPLOYEE_REPO.findByEmailAndPassword(loginDTO.getEmail(), pass);
         if(empOptional.isPresent()){
-            Optional<Timesheet> shouldBeNullTimesheet = TIMESHEET_REPO.findByEmployeeAndClockOutIsNull(empOptional.get());
+            Optional<Timesheet> shouldBeNullTimesheet;
+            if(PASSWORD_HASHING.comparePassword(empOptional.get().getPassword(),loginDTO.getPassword())){
+                shouldBeNullTimesheet = TIMESHEET_REPO.findByEmployeeAndClockOutIsNull(empOptional.get());
+            }else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username/Password not found");
+            }
             if(!shouldBeNullTimesheet.isPresent()){
                 Timesheet timesheet = new Timesheet();
                 timesheet.setEmployee(empOptional.get());
@@ -139,18 +138,18 @@ public class TimesheetService {
      * @return A data transfer object that represents the timesheet object that was updated with the clock out information
      */
     public TimesheetDTO clockOut(LoginDTO loginDTO){
-        String pass;
-        try {
-            pass  = PASSWORD_HASHING.hashPasswordWithEmail(loginDTO.getEmail(), loginDTO.getPassword());
+        Optional<Employee> empOptional = EMPLOYEE_REPO.findByEmail(loginDTO.getEmail());
 
-        } catch (NoSuchAlgorithmException ignored) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Could not process login credentials");
-        }
-        Optional<Employee> empOptional = EMPLOYEE_REPO.findByEmailAndPassword(loginDTO.getEmail(), pass);
         if(empOptional.isPresent()){
-            Optional<Timesheet> timesheetOptional = TIMESHEET_REPO.findByEmployeeAndClockOutIsNull(empOptional.get());
+            Optional<Timesheet> timesheetOptional;
+            if(PASSWORD_HASHING.comparePassword(empOptional.get().getPassword(),loginDTO.getPassword())){
+                timesheetOptional = TIMESHEET_REPO.findByEmployeeAndClockOutIsNull(empOptional.get());
+            }else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username/Password not found");
+            }
             if(timesheetOptional.isPresent()){
                 timesheetOptional.get().setClockOut(new Timestamp(System.currentTimeMillis()));
+                TIMESHEET_REPO.save(timesheetOptional.get());
                 return TimesheetDTO.timesheetToDTO().apply(timesheetOptional.get());
             }else{
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Employee not clock in, please check with a manager.");

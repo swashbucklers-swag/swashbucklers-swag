@@ -27,4 +27,8 @@ public class PasswordHashingUtil implements Hashable {
     public String hashPasswordWithEmail(String email, String password) throws NoSuchAlgorithmException {
         return passwordEncoder.encode(password);
     }
+
+    public boolean comparePassword(String old, String newPass){
+        return passwordEncoder.matches(newPass,old);
+    }
 }

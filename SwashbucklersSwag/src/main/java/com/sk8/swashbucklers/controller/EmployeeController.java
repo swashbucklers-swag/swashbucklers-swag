@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for HTTP requests pertaining to employee class
  * @author Nick Zimmerman
  */
-
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/employee")
 @Secured("ROLE_CAPTAIN")

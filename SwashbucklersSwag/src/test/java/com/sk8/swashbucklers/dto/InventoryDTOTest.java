@@ -1,5 +1,6 @@
-package com.sk8.swashbucklers.dto;
+package com.sk8.swashbucklers.DTO;
 
+import com.sk8.swashbucklers.dto.InventoryDTO;
 import com.sk8.swashbucklers.model.item.Inventory;
 import com.sk8.swashbucklers.model.item.Item;
 import org.junit.jupiter.api.Assertions;

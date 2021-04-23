@@ -17,6 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
+
+import javax.jws.Oneway;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -28,6 +33,8 @@ import java.util.Optional;
  */
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@TestPropertySource(locations = "classpath:test-application.properties")
 class TimesheetServiceTest {
     @MockBean
     private TimesheetRepository timesheetRepository;
@@ -40,6 +47,9 @@ class TimesheetServiceTest {
 
     @Autowired
     private PasswordHashingUtil PASSWORD_HASHING;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
      void whenGetAllTimesheets_returnsPageOfTimesheetDTO(){
@@ -126,21 +136,13 @@ class TimesheetServiceTest {
 
     @Test
     void whenClockIn_returnsTimesheetDTO(){
-        Employee employee = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
-        LoginDTO loginDTO = new LoginDTO("mkscott@dunder.com","password");
+        Employee employee = new Employee(0,"Michael","Scott", Rank.CAPTAIN, passwordEncoder.encode("password"), "5704289173", null, "mkscott@dunder.com");
+        LoginDTO loginDTO = new LoginDTO("mkscott@dunder.com", "password");
         Timestamp ci = new Timestamp(System.currentTimeMillis());
         Timestamp co = new Timestamp(System.currentTimeMillis());
         Timesheet timesheet = new Timesheet(0, ci, co,employee);
 
-        String pass="";
-        try {
-            pass  = PASSWORD_HASHING.hashPasswordWithEmail(loginDTO.getEmail(), loginDTO.getPassword());
-
-        } catch (NoSuchAlgorithmException ignored) {
-            Assertions.fail();
-        }
-
-        Mockito.when(employeeRepository.findByEmailAndPassword("mkscott@dunder.com",pass)).thenReturn(Optional.of(employee));
+        Mockito.when(employeeRepository.findByEmail("mkscott@dunder.com")).thenReturn(Optional.of(employee));
         Mockito.when(timesheetRepository.findByEmployeeAndClockOutIsNull(employee)).thenReturn(Optional.empty());
         Mockito.when(timesheetRepository.save(org.mockito.ArgumentMatchers.isA(Timesheet.class))).thenReturn(timesheet);
 
@@ -155,21 +157,13 @@ class TimesheetServiceTest {
 
     @Test
     void whenClockOut_returnsTimesheetDTO(){
-        Employee employee = new Employee(0,"Michael","Scott", Rank.CAPTAIN, "password", "5704289173", null, "mkscott@dunder.com");
+        Employee employee = new Employee(0,"Michael","Scott", Rank.CAPTAIN, passwordEncoder.encode("password"), "5704289173", null, "mkscott@dunder.com");
         LoginDTO loginDTO = new LoginDTO("mkscott@dunder.com","password");
         Timestamp ci = new Timestamp(System.currentTimeMillis());
         Timestamp co = new Timestamp(System.currentTimeMillis());
         Timesheet timesheet = new Timesheet(0, ci, null,employee);
 
-        String pass="";
-        try {
-            pass  = PASSWORD_HASHING.hashPasswordWithEmail(loginDTO.getEmail(), loginDTO.getPassword());
-
-        } catch (NoSuchAlgorithmException ignored) {
-            Assertions.fail();
-        }
-
-        Mockito.when(employeeRepository.findByEmailAndPassword("mkscott@dunder.com",pass)).thenReturn(Optional.of(employee));
+        Mockito.when(employeeRepository.findByEmail("mkscott@dunder.com")).thenReturn(Optional.of(employee));
         Mockito.when(timesheetRepository.findByEmployeeAndClockOutIsNull(employee)).thenReturn(Optional.of(timesheet));
 
         TimesheetDTO response = timesheetService.clockOut(loginDTO);

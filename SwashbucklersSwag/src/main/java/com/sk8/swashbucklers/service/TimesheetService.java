@@ -113,11 +113,13 @@ public class TimesheetService {
 
         if(empOptional.isPresent()){
             Optional<Timesheet> shouldBeNullTimesheet;
+
             if(PASSWORD_HASHING.comparePassword(empOptional.get().getPassword(),loginDTO.getPassword())){
                 shouldBeNullTimesheet = TIMESHEET_REPO.findByEmployeeAndClockOutIsNull(empOptional.get());
             }else{
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username/Password not found");
             }
+
             if(!shouldBeNullTimesheet.isPresent()){
                 Timesheet timesheet = new Timesheet();
                 timesheet.setEmployee(empOptional.get());

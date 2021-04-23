@@ -24,6 +24,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
@@ -34,6 +37,8 @@ import java.util.*;
  * @author Steven Ceglarek
  */
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@TestPropertySource(locations = "classpath:test-application.properties")
 public class OrderServiceTest {
 
     @MockBean

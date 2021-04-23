@@ -22,7 +22,9 @@ public class MyUserPrincipal implements UserDetails {
         return arrayList;
     }
 
-
+    public Employee getEmployee(){
+        return employee;
+    }
 
     public MyUserPrincipal(Employee employee) {
         this.employee = employee;

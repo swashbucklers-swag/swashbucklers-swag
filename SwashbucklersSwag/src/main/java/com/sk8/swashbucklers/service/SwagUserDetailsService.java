@@ -26,7 +26,7 @@ public class SwagUserDetailsService implements UserDetailsService {
     EmployeeRepository employeeRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public MyUserPrincipal loadUserByUsername(String email) throws UsernameNotFoundException {
 //        //TODO: Set up our user Repo.
 //        SimpleGrantedAuthority auth = Rank.toAuth(Rank.CAPTAIN);
 //        ArrayList<SimpleGrantedAuthority> arrayList = new ArrayList<>();

@@ -1,9 +1,12 @@
 package com.sk8.swashbucklers.controller;
 
+import com.sk8.swashbucklers.dto.EmployeeDTO;
 import com.sk8.swashbucklers.model.authentication.AuthenticationRequest;
 import com.sk8.swashbucklers.model.authentication.AuthenticationResponse;
+import com.sk8.swashbucklers.model.employee.Employee;
 import com.sk8.swashbucklers.service.SwagUserDetailsService;
 import com.sk8.swashbucklers.util.JwtUtil;
+import com.sk8.swashbucklers.util.MyUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,12 +52,13 @@ public class LoginController {
         }
 
 
-        final UserDetails userDetails = userDetailsService
+        final MyUserPrincipal userDetails = userDetailsService
                 .loadUserByUsername(request.getUsername());
 
         final String jwt = jwtUtil.generateToken(userDetails);
+        final EmployeeDTO emp = EmployeeDTO.employeeToDTO().apply(userDetails.getEmployee());
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt,emp));
     }
 
 }

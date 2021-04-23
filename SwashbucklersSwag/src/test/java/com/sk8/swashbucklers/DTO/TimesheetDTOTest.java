@@ -15,7 +15,7 @@ import java.sql.Timestamp;
  */
 
 @SpringBootTest
-public class TimesheetDTOTest {
+class TimesheetDTOTest {
 
     @Test
     void whenConvertingToDTO_DTOFieldsMatchOriginalObject(){

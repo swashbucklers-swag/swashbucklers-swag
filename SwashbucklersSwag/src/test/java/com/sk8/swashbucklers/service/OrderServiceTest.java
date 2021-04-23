@@ -39,7 +39,7 @@ import java.util.*;
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @TestPropertySource(locations = "classpath:test-application.properties")
-public class OrderServiceTest {
+class OrderServiceTest {
 
     @MockBean
     private OrderRepository orderRepository;
@@ -57,7 +57,7 @@ public class OrderServiceTest {
     private InventoryService inventoryService;
 
     @Test
-    public void whenGetAllOrder_returnsPageOfOrderDTO() {
+    void whenGetAllOrder_returnsPageOfOrderDTO() {
         List<Order> orderArrayList = new ArrayList<>();
         Item item = new Item(0, "Xbox Series X", "Microsoft Game System", 499.99, 25);
         Inventory inventory = new Inventory(0, item, 13);
@@ -66,14 +66,11 @@ public class OrderServiceTest {
         StatusHistory statusHistory = new StatusHistory(0, OrderStatus.PROCESSING_ORDER, new Timestamp(System.currentTimeMillis()));
         List<StatusHistory> statusHistoryList = new ArrayList<>();
         statusHistoryList.add(statusHistory);
-        Set<OrderDetailsDTO> orderDetailsDTOSet = new HashSet<>();
         Customer c = new Customer(0, "Lebron", "James", "lbj@mail.com", "pass123", "7861234567",
                 new Location(0, "123 Fake St", "Springfield", State.FL, "33426"));
         Location l = new Location(1, "954 Broward blvd", "Hollywood", State.FL, "33026");
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        orderDetailsDTOSet.add(new OrderDetailsDTO(0, 10));
         Set<OrderDetails> orderDetailsSet = new HashSet<>(Collections.singletonList(new OrderDetails(0, item, 10)));
-        OrderCreateDTO order = new OrderCreateDTO(0, l, orderDetailsDTOSet);
         Order newOrder = new Order(0, c, l, Timestamp.from(Instant.now()), statusHistoryList, orderDetailsSet);
         for (OrderDetails orderDetails : orderDetailsSet) {
             orderDetails.setOrder(newOrder);

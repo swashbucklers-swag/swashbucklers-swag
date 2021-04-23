@@ -1,7 +1,6 @@
 package com.sk8.swashbucklers.model.authentication;
 
 import com.sk8.swashbucklers.dto.EmployeeDTO;
-import com.sk8.swashbucklers.model.employee.Employee;
 
 import java.io.Serializable;
 
